@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="login-pane" stylesheets="@../styles/login-style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+    <Label layoutX="560.0" layoutY="50.0" styleClass="header-label" stylesheets="@../styles/login-style.css" text="IPL Insights" />
+    <VBox alignment="CENTER" layoutX="490.0" layoutY="360.0" prefWidth="300.0" spacing="20.0" stylesheets="@../styles/login-style.css">
+        <TextField id="usernameField" fx:id="clubname_field" promptText="Club Name" styleClass="input-field" stylesheets="@../styles/login-style.css" />
+        <PasswordField id="passwordField" fx:id="password_field" promptText="Password" styleClass="input-field" stylesheets="@../styles/login-style.css" />
+        <Button fx:id="login_button" onAction="#login_button_clicked" prefHeight="25.0" prefWidth="313.0" styleClass="login-button" stylesheets="@../styles/login-style.css" text="Log In" />
+        <Button fx:id="guest_login_button" mnemonicParsing="false" onAction="#guest_button_clicked" styleClass="guest_login_button" stylesheets="@../styles/login-style.css" text="Login as Guest" />
+    </VBox>
+</AnchorPane>
