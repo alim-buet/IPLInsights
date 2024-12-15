@@ -62,6 +62,7 @@ public class ReadThreadServer implements Runnable {
                     //the whole player list to the client.
                     System.out.println("Guest login request received by the server");
                     networkUtil.write(playerDatabase.getAllPlayers());
+                    System.out.println("A player list with size "+playerDatabase.getAllPlayers().size()+" sent to the guest");
                 }
                 else if(o instanceof LoginCredential){
                     System.out.println("Login credential received by the server");

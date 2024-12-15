@@ -17,6 +17,7 @@ public class Server {
     //key - club name and value- networkUtil
 
     public Server(){
+        System.out.println("Server started successfully");
         clientMap = new HashMap<>();
         playerDatabase = new PlayerDatabase("src/main/resources/data/players.txt");
         System.out.println("Player loading successful");

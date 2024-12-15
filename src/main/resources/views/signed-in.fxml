@@ -5,7 +5,6 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -121,21 +120,13 @@
                                                                 <HBox alignment="CENTER" prefHeight="24.0" prefWidth="1040.0" spacing="10.0">
                                                                     <children>
                                                                         <Label text="From" />
-                                                                        <Spinner fx:id="r1Spinner" editable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0">
-<!--                                                                            <valueFactory>-->
-<!--                                                                                <SpinnerValueFactory.DoubleSpinnerValueFactory amountToStepBy="8000" max="9999999999999999" min="0" />-->
-<!--                                                                            </valueFactory>-->
-                                                                        </Spinner>
+                                                      <TextField fx:id="salaryRangeFromText" prefHeight="40.0" prefWidth="160.0" />
                                                                         <Label text="To">
                                                                             <HBox.margin>
                                                                                 <Insets left="20.0" />
                                                                             </HBox.margin>
                                                                         </Label>
-                                                                        <Spinner fx:id="r2Spinner" editable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0">
-<!--                                                                            <valueFactory>-->
-<!--                                                                                <SpinnerValueFactory.DoubleSpinnerValueFactory amountToStepBy="8000" max="9999999999999999" min="0" />-->
-<!--                                                                            </valueFactory>-->
-                                                                        </Spinner>
+                                                      <TextField fx:id="salaryRangeToText" prefHeight="40.0" prefWidth="160.0" />
                                                                         <Button fx:id="nameSearchButton11" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#searchBySalary" prefHeight="40.0" prefWidth="119.0" text="Search">
                                                                             <HBox.margin>
                                                                                 <Insets left="40.0" />
@@ -163,7 +154,7 @@
                                                 <Insets right="30.0" />
                                             </padding>
                                         </TabPane>
-                                        <fx:include fx:id="playerDisplayP" source="player-display.fxml" />
+                                        <fx:include fx:id="playerDisplayC" source="player-display.fxml" />
                                     </children>
                                     <padding>
                                         <Insets bottom="20.0" left="20.0" />
@@ -264,7 +255,7 @@
                                                 <Insets />
                                             </opaqueInsets>
                                         </TabPane>
-                                        <fx:include fx:id="playerDisplayC" source="player-display.fxml" />
+                                        <fx:include fx:id="playerDisplayP" source="player-display.fxml" />
                                     </children>
                                     <padding>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -321,21 +312,6 @@
                                                         <Label text="Weekly Salary" GridPane.rowIndex="5" />
                                                         <TextField fx:id="addName" prefHeight="40.0" GridPane.columnIndex="4" />
                                                         <ChoiceBox fx:id="addPosition" prefHeight="40.0" prefWidth="398.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                                        <Spinner fx:id="addAge" editable="true" prefHeight="40.0" prefWidth="396.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
-<!--                                                            <valueFactory>-->
-<!--                                                                <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="1" max="150" min="15" />-->
-<!--                                                            </valueFactory>-->
-                                                        </Spinner>
-                                                        <Spinner fx:id="addHeight" editable="true" prefHeight="40.0" prefWidth="396.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
-<!--                                                            <valueFactory>-->
-<!--                                                                <SpinnerValueFactory.DoubleSpinnerValueFactory amountToStepBy="0.01" max="3.0" min="1.4" />-->
-<!--                                                            </valueFactory>-->
-                                                        </Spinner>
-                                                        <Spinner fx:id="addSalary" editable="true" prefHeight="40.0" prefWidth="396.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
-<!--                                                            <valueFactory>-->
-<!--                                                                <SpinnerValueFactory.DoubleSpinnerValueFactory amountToStepBy="8000" max="9999999999999999" min="0" />-->
-<!--                                                            </valueFactory>-->
-                                                        </Spinner>
                                                         <Label text=":" GridPane.columnIndex="3" />
                                                         <Label text=":" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                                         <Label prefHeight="16.0" prefWidth="0.0" text=":" GridPane.columnIndex="3" GridPane.rowIndex="2" />
@@ -344,12 +320,11 @@
                                                         <Label text=":" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                                                         <Label text=":" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                                         <Label text="Jersey Number" GridPane.rowIndex="6" />
-                                                        <Spinner fx:id="addNumber" editable="true" prefHeight="40.0" prefWidth="341.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
-<!--                                                            <valueFactory>-->
-<!--                                                                <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="1" max="99" min="1" />-->
-<!--                                                            </valueFactory>-->
-                                                        </Spinner>
                                           <TextField fx:id="addCountry" prefHeight="40.0" prefWidth="398.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                          <TextField fx:id="addAge" prefHeight="40.0" prefWidth="398.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                                          <TextField fx:id="addHeight" prefHeight="40.0" prefWidth="398.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                                          <TextField fx:id="addSalary" prefHeight="40.0" prefWidth="398.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                                          <TextField fx:id="addNumber" prefHeight="40.0" prefWidth="398.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
                                                     </children>
                                                 </GridPane>
                                                 <VBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="368.0" prefWidth="401.0" spacing="10.0">

@@ -135,8 +135,16 @@ public class Player implements Serializable {
                 "Weekly Salary: "+String.format("%.0f", weeklySalary)+" INR\n";
     }
 
+    public void setPfpBytes(byte[] pfpBytes) {
+        this.pfpBytes = pfpBytes;
+    }
+
     public double getPrice() {
         return price;
+    }
+
+    public void setAuctioned(boolean auctioned) {
+        this.auctioned = auctioned;
     }
 
     public void setPrice(double price) {

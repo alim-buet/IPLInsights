@@ -11,10 +11,12 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.fxml.FXMLLoader;
 import server.NetworkUtil;
@@ -27,47 +29,46 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
-    public ImageView clubLogoDisplay;
-    public Label clubNameDisplay;
-    public TabPane tabPane1;
-    public Button nameSearchButton;
-    public ComboBox<String> clubSearch;
-    public ComboBox<String> countrySearch;
-    public Button nameSearchButton1;
-    public ComboBox<String> positionSearch;
-    public Button nameSearchButton2;
-    public Spinner<Double> r1Spinner;
-    public Spinner<Double> r2Spinner;
-    public Button nameSearchButton11;
-    public AnchorPane playerDisplayP;
-    public Label clubNameDisplay1;
-    public AnchorPane playerDisplayC;
-    public TextField addName;
-    public ChoiceBox<String> addPosition;
-    public TextField addCountry;
-    public Spinner<Double> addAge;
-    public Spinner<Double> addHeight;
-    public Spinner<Double> addSalary;
-    public Spinner<Integer> addNumber;
-    public Button addPfp1;
-    public ImageView showSettings;
-    public PlayerDisplayController playerDisplayPController, playerDisplayCController;
-    public TextField searchNameTextField;
-    public TextField nameSearchTextbox;
-    public ComboBox<String> selectedClub1;
-    public Button nameSearchButton131;
-    public ComboBox<String> selectedClub11;
-    public Button nameSearchButton1312;
-    public ComboBox<String> selectedClub;
-    public Button nameSearchButton1311;
-    public ComboBox<String> selectedClubForMaxAge;
-    public ComboBox<String> selectedClubForMaxHeight;
-    public ComboBox<String> SelectedClubForMaxSalaray;
-    public Button nameSearchButton13111;
-    public ComboBox<String> selectedClubForMaxAge1;
-    public Label clubAnnualSalaryLabel;
+
+    @FXML public TextField salaryRangeFromText;
+   @FXML public TextField salaryRangeToText;
+    @FXML public TextField addAge;
+   @FXML public TextField addHeight;
+   @FXML public TextField addSalary;
+   @FXML public TextField addNumber;
+    @FXML
+    private ImageView clubLogoDisplay, showSettings;
+    @FXML
+    private Label clubNameDisplay, clubAnnualSalaryLabel;
+    @FXML
+    private TabPane tabPane1;
+    @FXML
+    private Button nameSearchButton, nameSearchButton1, nameSearchButton2, nameSearchButton11, nameSearchButton131, nameSearchButton1311, nameSearchButton1312, nameSearchButton13111, addPfp1;
+    @FXML
+    private ComboBox<String> clubSearch, countrySearch, positionSearch, selectedClubForMaxAge, selectedClubForMaxHeight, SelectedClubForMaxSalary;
 
 
+
+
+    @FXML
+    private HBox playerDisplayP, playerDisplayC;
+    @FXML
+    private TextField addName, addCountry, searchNameTextField, nameSearchTextbox;
+    @FXML
+    private ChoiceBox<String> addPosition;
+    @FXML private PlayerDisplayController playerDisplayPController, playerDisplayCController;
+
+
+
+
+
+    List<Player> players = Client.getPlayers();
+    PlayerDatabase pdb = Client.getPlayerDatabase();
+
+    public MainController() throws IOException {
+    }
+
+    @FXML
     public void logout() {
         //only the club client has that button acsess so no need to check the user mode
         //first ekta confirmation alert show kore dei
@@ -90,7 +91,7 @@ public class MainController implements Initializable {
 
             //login page load kora lagbe
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("@../../resources/views/login.fxml"));
+            loader.setLocation(getClass().getResource("/views/login.fxml"));
             try {
                 Client.getMainStage().getScene().setRoot(loader.load());
             } catch (Exception e) {
@@ -98,15 +99,37 @@ public class MainController implements Initializable {
             }
         }
     }
+    @FXML
+    public void refreshList() {
+        try {
+            if(playerDisplayPController!=null){
+                playerDisplayPController.loadPlayers();
+            }
+            if(playerDisplayCController!=null){
+                playerDisplayCController.loadPlayers();
+            }
+        } catch (Exception e) {
+            System.out.println("Refreshlist function e controller diye load player function call e problem");
+            e.printStackTrace();
+        }
+        try {
+            if (playerDisplayPController != null) {
+                playerDisplayPController.resetPlayerInfo();
+            }
+            if(playerDisplayCController!=null){
+                playerDisplayCController.resetPlayerInfo();
+            }
+        } catch (Exception e) {
+            System.out.println("Refreshlist function e controller diye reset player info function call e problem");
+            e.printStackTrace();
 
-    public void refreshList(Event event) {
-        playerDisplayPController.loadPlayers();
-        playerDisplayCController.loadPlayers();
-        playerDisplayPController.resetPlayerInfo();
-        playerDisplayCController.resetPlayerInfo();
+
+        }
 
     }
+    //made some changes here
 
+    @FXML
     public void searchByName(ActionEvent actionEvent) {
         Player p = Client.playerDatabase.searchByName(searchNameTextField.getText());
         if(p==null){
@@ -119,36 +142,36 @@ public class MainController implements Initializable {
         }
         else{
             //show the player info in the player display
-            playerDisplayPController.playerListView.setItems(FXCollections.observableArrayList(p.getName()));
-
+            playerDisplayPController.playerListView.getSelectionModel().select(p.getName());
+            playerDisplayPController.playerListView.scrollTo(p.getName());
+            playerDisplayPController.showPlayerInfo(p);
         }
-
     }
 
-    public void searchByCountryAndClub(ActionEvent actionEvent) {
+    @FXML public void searchByCountryAndClub(ActionEvent actionEvent) {
         String club = clubSearch.getValue();
         String country = countrySearch.getValue();
         List<Player> result = Client.playerDatabase.searchByClubAndCountry(club, country);
-        handleResult(result, playerDisplayPController);
+        handleResult(result,0); //0-playercontroller 1-clubcontroller
 
     }
 
-    public void searchByPosition(ActionEvent actionEvent) {
+    @FXML public void searchByPosition(ActionEvent actionEvent) {
         String position = positionSearch.getValue();
         List<Player> result = Client.playerDatabase.searchByPosition(position);
-        handleResult(result, playerDisplayPController);
+        handleResult(result,0);
     }
 
-    public void searchBySalary(ActionEvent actionEvent) {
-        List<Player> result = Client.playerDatabase.searchByWeeklySalary(r1Spinner.getValue(), r2Spinner.getValue());
-        handleResult(result, playerDisplayPController);
+    @FXML  public void searchBySalary(ActionEvent actionEvent) {
+        List<Player> result = Client.playerDatabase.searchByWeeklySalary(Double.parseDouble(salaryRangeFromText.getText()), Double.parseDouble(salaryRangeToText.getText()));
+        handleResult(result, 0);
     }
 
-    public void showDemographics(Event event) {
+    @FXML  public void showDemographics(Event event) {
         //user clicks on the countrywise player analysis tab. demographics view load kore client er scene oita set kora lagbe
         //load the demographics view fxml file and set it as the scene of the client
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("@../../resources/views/demographics.fxml"));
+        loader.setLocation(getClass().getResource("/views/demographics.fxml"));
         try {
             Client.getMainStage().getScene().setRoot(loader.load());
         } catch (Exception e) {
@@ -156,28 +179,28 @@ public class MainController implements Initializable {
         }
     }
 
-    public void showAnnualSalary() {
+    @FXML   public void showAnnualSalary() {
         if(Client.getUserMode()==UserMode.CLUB){
-            //show the annual salary of the club
-            clubAnnualSalaryLabel.setText("Annual Salary: "+Client.playerDatabase.totalSalary(Client.getClientClubName())+" INR");
+            //show the annual salary of the club in a formatted way to show the full text using %.2f
+            clubAnnualSalaryLabel.setText("Total Annual Salary: "+String.format("%.0f", Client.playerDatabase.totalSalary(Client.getClientClubName())));
         }
         else if(Client.getUserMode()==UserMode.GUEST){
             //view ache. so oita load korbo
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("@../../resources/views/salary.fxml"));
+            loader.setLocation(getClass().getResource("/views/salary.fxml"));
             try {
                 Client.getMainStage().getScene().setRoot(loader.load());
             } catch (Exception e) {
-                System.out.println("Salary view Load korte jhamela");
+                System.out.println("annual salary button e click korar por Salary view Load korte jhamela");
             }
         }
     }
 
-    public void showAuction(Event event) {
+    @FXML  public void showAuction(Event event) {
         //user clicks on the auction tab. auction view load kore client er scene oita set kora lagbe
         //load the auction view fxml file and set it as the scene of the client
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("@../../resources/views/auction.fxml"));
+        loader.setLocation(getClass().getResource("/views/auction.fxml"));
         try {
             Client.getMainStage().getScene().setRoot(loader.load());
         } catch (Exception e) {
@@ -185,7 +208,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void submitPlayer() {
+    @FXML  public void submitPlayer() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Input missing");
         alert.setHeaderText(null);
@@ -198,11 +221,11 @@ public class MainController implements Initializable {
             alert.setContentText("Please enter a country for the player.");
             alert.showAndWait();
         }
-        else if (addAge.getValue() == 0) {
+        else if (addAge.getText().isBlank()) {
             alert.setContentText("Please enter an age for the player.");
             alert.showAndWait();
         }
-        else if (addHeight.getValue() == 0) {
+        else if (addHeight.getText().isBlank()) {
             alert.setContentText("Please enter a height for the player.");
             alert.showAndWait();
         }
@@ -210,29 +233,30 @@ public class MainController implements Initializable {
             alert.setContentText("Please enter a position for the player.");
             alert.showAndWait();
         }
-        else if (addNumber.getValue() == 0) {
+        else if (addNumber.getText().isBlank()) {
             alert.setContentText("Please enter a number for the player.");
             alert.showAndWait();
         }
-        else if (addSalary.getValue() == 0) {
+        else if (addSalary.getText().isBlank()) {
             alert.setContentText("Please enter a salary for the player.");
             alert.showAndWait();
         }
         else {
             //everything is aight
-            //create the player
-            Player p = new Player(addName.getText(), addCountry.getText(),  addAge.getValue().intValue(), addHeight.getValue(), Client.getClientClubName(), addPosition.getValue(), addNumber.getValue(), addSalary.getValue());
+
+            Player p = new Player(addName.getText(), addCountry.getText(), Integer.parseInt(addAge.getText()), Double.parseDouble(addHeight.getText()), Client.getClientClubName(), addPosition.getValue(), Integer.parseInt(addNumber.getText()), Double.parseDouble(addSalary.getText()));
             //send the guy to the server
             try {
                 Client.getSockt().write(p);
                 //clear the textfields
                 addName.clear();
                 addCountry.clear();
-                addAge.getValueFactory().setValue(0.0);
-                addHeight.getValueFactory().setValue(0.0);
-                addPosition.getSelectionModel().clearSelection();
-                addNumber.getValueFactory().setValue(0);
-                addSalary.getValueFactory().setValue(0.0);
+                addAge.clear();
+                addHeight.clear();
+                addNumber.clear();
+                addSalary.clear();
+                addPosition.getSelectionModel().select(0);
+
             } catch (Exception e) {
                 System.out.println("add player e Player write e jhamela");
             }
@@ -244,6 +268,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         try {
             Client.setPlayerDisplayC(playerDisplayCController);
             Client.setPlayerDisplayP(playerDisplayPController);
@@ -251,15 +276,15 @@ public class MainController implements Initializable {
             playerDisplayCController.loadPlayers();
         } catch (Exception e) {
             System.out.println("PlayerDisplayController load korte jhamela");
+            //show what kind of error it is
+            e.printStackTrace();
         }
         tabPane1.getSelectionModel().select(0);
+//        System.out.println("First tab selected");
         //meaning first tab is selected initially
-        PlayerDatabase pdb = new PlayerDatabase(Client.getPlayers());
-        List<String> clubNames = new ArrayList<>();
+        List<String> clubNames = pdb.getClubNames();
+        List<String> countryNames = pdb.getCountryNames();
 
-        clubNames = pdb.getClubNames();
-        List<String> countryNames = new ArrayList<>();
-        countryNames = pdb.getCountryNames();
 
 
         if(Client.getUserMode()== UserMode.GUEST){
@@ -269,11 +294,14 @@ public class MainController implements Initializable {
             //in the fxml view there is a selection box for the club, we need to load all the club names in that box
             //there is a function in the database that returns the list of all available club names
 
-            selectedClub.setItems(FXCollections.observableArrayList(clubNames));
+            selectedClubForMaxAge.setItems(FXCollections.observableArrayList(clubNames));
+            selectedClubForMaxHeight.setItems(FXCollections.observableArrayList(clubNames));
+            SelectedClubForMaxSalary.setItems(FXCollections.observableArrayList(clubNames));
+            selectedClubForMaxHeight.getSelectionModel().select(0);
+            selectedClubForMaxAge.getSelectionModel().select(0);
+            SelectedClubForMaxSalary.getSelectionModel().select(0);
 
-            //set the items of the combo box
-            selectedClub.getSelectionModel().select(0);
-            selectedClub.setEditable(false);
+
 
 
 
@@ -281,31 +309,37 @@ public class MainController implements Initializable {
         else if(Client.getUserMode()==UserMode.CLUB){
             //initialize the clubname
             clubNameDisplay.setText(Client.getClientClubName());
-            Image clubLogo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("@../resources/clubLogos/" + Client.getClientClubName() + ".png")));
-            clubLogoDisplay.setImage(clubLogo);
+
+            Image clubLogo = null;
+            try {
+                clubLogo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/clubLogos/" + Client.getClientClubName() + ".png")));
+                clubLogoDisplay.setImage(clubLogo);
+
+            } catch (Exception e) {
+                System.out.println("Club logo load korte problem");
+            }
             addPosition.getItems().addAll("Batsman","Bowler","Wicketkeeper","Allrounder");
 
 
         }
         clubSearch.setItems(FXCollections.observableArrayList(clubNames));
         countrySearch.setItems(FXCollections.observableArrayList(countryNames));
-        countrySearch.getItems().addFirst("-------ANY-------");
-        positionSearch.setItems(FXCollections.observableArrayList("Batsman","Bowler","Wiicketkeeper","Allrounder"));
+        clubSearch.getItems().addFirst("ANY");
+        positionSearch.setItems(FXCollections.observableArrayList("Batsman","Bowler","Wicketkeeper","Allrounder"));
         //we dont want a club client to access the search filtering by club name
         if(Client.getUserMode()==UserMode.CLUB){
             clubSearch.setDisable(true);
             clubSearch.getSelectionModel().select(Client.getClientClubName());
         }
 
-
-
-
         clubSearch.getSelectionModel().select(0);
+        countrySearch.getSelectionModel().select(0);
 
 
     }
 
-    public void maxAgeSearch() {
+    @FXML  public void maxAgeSearch() {
+        System.out.println("Max age search button clicked");
         String clubName;
         if(Client.getUserMode()==UserMode.CLUB){
              clubName = Client.getClientClubName();
@@ -314,11 +348,12 @@ public class MainController implements Initializable {
              clubName = selectedClubForMaxAge.getValue();
         }
         List<Player> result = Client.playerDatabase.searchMaxAgedPlayers(clubName);
-        handleResult(result, playerDisplayPController);
+        System.out.println("Result size: "+result.size());
+        handleResult(result, 1);
 
     }
 
-    public void maxHeightSearch(ActionEvent actionEvent) {
+    @FXML   public void maxHeightSearch(ActionEvent actionEvent) {
        String clubName;
        if(Client.getUserMode()==UserMode.CLUB){
               clubName = Client.getClientClubName();
@@ -327,21 +362,24 @@ public class MainController implements Initializable {
               clubName = selectedClubForMaxHeight.getValue();
        }
         List<Player> result = Client.playerDatabase.searchMaxHeightPlayers(clubName);
-        handleResult(result, playerDisplayPController);
+        handleResult(result, 1);
     }
-    public void maxSalarySearch(ActionEvent actionEvent) {
+    @FXML  public void maxSalarySearch(ActionEvent actionEvent) {
         String clubName;
         if(Client.getUserMode()==UserMode.CLUB){
             clubName = Client.getClientClubName();
         }
         else{
-            clubName = SelectedClubForMaxSalaray.getValue();
+            clubName = SelectedClubForMaxSalary.getValue();
         }
         List<Player> result = Client.playerDatabase.searchMaxSalaryPlayers(clubName);
-        handleResult(result, playerDisplayPController);
+        handleResult(result, 1);
     }
 
-    private static void handleResult(List<Player> result, PlayerDisplayController playerDisplayPController) {
+
+    @FXML public static void handleResult(List<Player> result, int id)
+    { {
+        //id - 0= playercontroller, 1=clubcontroller
         if(result.isEmpty()){
             //show an alert that no player found
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -356,8 +394,20 @@ public class MainController implements Initializable {
             for(Player p: result){
                 pnames.add(p.getName());
             }
-            playerDisplayPController.playerListView.setItems(FXCollections.observableArrayList(pnames));
+            if(id==0){
+                //playercontroller
+                Client.getPlayerDisplayP().playerListView.setItems(FXCollections.observableArrayList(pnames));
+                Client.getPlayerDisplayP().resetPlayerInfo();
+                Client.getPlayerDisplayP().showPlayerInfo(result.getFirst());
+            }
+            else if(id==1){
+                //clubcontroller
+                Client.getPlayerDisplayC().playerListView.setItems(FXCollections.observableArrayList(pnames));
+                Client.getPlayerDisplayC().resetPlayerInfo();
+                Client.getPlayerDisplayC().showPlayerInfo(result.getFirst());
+            }
         }
+
     }
 
-}
+}}

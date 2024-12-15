@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class SalaryController implements Initializable {
@@ -42,22 +43,22 @@ public class SalaryController implements Initializable {
         ObservableList<ClubData> clubDataList = FXCollections.observableArrayList();
         List<String> clubNames = playerDatabase.getClubNames();
         for (String clubName : clubNames) {
-            String logoUrl = "@../resources/clubLogos/" + clubName + ".png";
+
 
             double annualSalary = playerDatabase.totalSalary(clubName);
 
-            ImageView logoImageView = new ImageView(new Image(logoUrl));
-            logoImageView.setFitHeight(40);
-            logoImageView.setFitWidth(40);
+            ImageView logoImageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream(String.format("/clubLogos/%s.png", clubName)))));
+            logoImageView.setFitHeight(60);
+            logoImageView.setFitWidth(60);
 
-            clubDataList.add(new ClubData(logoImageView, clubName, String.format("$%.2f", annualSalary)));
+            clubDataList.add(new ClubData(logoImageView, clubName, String.format("%.0f", annualSalary)+" INR"));
         }
         return clubDataList;
     }
 
     public void switchToPrimary() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("@../../resources/views/guest.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/guest.fxml"));
             Client.getMainStage().getScene().setRoot(loader.load());
         } catch (Exception e) {
             System.out.println("salary view theke back korar shomoy problem");

@@ -135,24 +135,30 @@ public class LoginController {
             players = (List<Player>) o;
             Client.setPlayers(players);
             Client.setUserMode(UserMode.GUEST);
-            System.out.println("Everything is set in the login controller for a new organizer login");
-
+            System.out.println("Everything is set in the login controller for a new guest login");
 
             try {
+
                 FXMLLoader loader = new FXMLLoader();
 
                 loader.setLocation(getClass().getResource("/views/guest.fxml"));
 
+
                 Scene newScene = new Scene(loader.load());
+                System.out.println("guest login fxml loading ... done");
 //                System.out.println("ei line execute");
                 Client.getMainStage().setScene(newScene);
                 Client.getMainStage().show();
 //                System.out.println("ei line execute hoise");
 
-            } catch (IOException e) {
+            } catch (Exception e) {
 
                 System.out.println("Guest er jonno fxml loading failed");
+                //show the exception
+                e.printStackTrace();
+
             }
+
             //now that the client is a club we will create a read thread for the client
             Client.setRtc(new ReadThreadClient(networkUtil));
         }

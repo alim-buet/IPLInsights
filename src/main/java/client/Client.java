@@ -27,7 +27,7 @@ public class Client extends Application {
 
     private static UserMode userMode;
     //0- none, so we'll land on login page, 1-club 2-organizer
-    private static PlayerDisplayController playerDisplayC,playerDisplayP;
+    private static PlayerDisplayController playerDisplayC,playerDisplayP; //playerDisplayC shows the info when searched by club, playerDisplayP shows the info when searched by player
     private static Label balanceLabel;
     private static String serverAddress = "127.0.0.1";
     private static final int PORT = 12345;
