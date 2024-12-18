@@ -4,6 +4,8 @@ import client.Client;
 import dataModels.Player;
 import dataModels.PlayerDatabase;
 import dataModels.UserMode;
+import dto.LogoutRequest;
+import dto.PlayerAddRequest;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -81,9 +83,10 @@ public class MainController implements Initializable {
         if(alert.getResult()==ButtonType.OK){
             try {
                 //network connection close kore dite hobe
+                Client.getSockt().write(new LogoutRequest(Client.getClientClubName()));
 
                 Client.getSockt().closeConnection();
-                //notun socket open kore lagbe client er jonno
+                //notun socket open kora lagbe client er jonno
                 Client.setSockt(new NetworkUtil("127.0.0.1",12345));
             } catch (Exception e) {
                 System.out.println("Logout er shomoy network close korte jhamela");
@@ -98,6 +101,8 @@ public class MainController implements Initializable {
                 System.out.println("logout kore login view Load korte jhamela");
             }
         }
+
+
     }
     @FXML
     public void refreshList() {
@@ -251,7 +256,7 @@ public class MainController implements Initializable {
             Player p = new Player(addName.getText(), addCountry.getText(), Integer.parseInt(addAge.getText()), Double.parseDouble(addHeight.getText()), Client.getClientClubName(), addPosition.getValue(), Integer.parseInt(addNumber.getText()), Double.parseDouble(addSalary.getText()));
             //send the guy to the server
             try {
-                Client.getSockt().write(p);
+                Client.getSockt().write(new PlayerAddRequest(p,"Sending"));
                 //clear the textfields
                 addName.clear();
                 addCountry.clear();

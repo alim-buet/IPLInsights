@@ -2,9 +2,12 @@ package network;
 
 import client.Client;
 import dataModels.Player;
+import dto.AuctionUpdate;
 import dto.AuctionedPlayerList;
 import dto.BuyConfirmation;
+import dto.PlayerAddRequest;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import server.NetworkUtil;
 
 import java.io.IOException;
@@ -40,10 +43,50 @@ public class ReadThreadClient implements Runnable {
 
 //                    Platform.runLater(() -> Client.observableAuctionedPlayerList.setAll(Client.auctionedPlayerList));
                 }
+                else if(o instanceof PlayerAddRequest){
+                    PlayerAddRequest par = (PlayerAddRequest) o;
+                    Player player = par.getPlayer();
+                    String status = par.getStatus();
+                    if(status.equals("REJECTED")){
+                        //there is a player with the same name so we will not the player in the list instead show an error alert saying that using platform.runlater
+                        Platform.runLater(() -> {
+                            //show alert
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error");
+                            alert.setHeaderText("Task Successfully Unsuccessful 😒");
+                            alert.setContentText("Please try again with a different name");
+                            alert.showAndWait();
+                        });
 
-                if (o instanceof BuyConfirmation) {
+                    }
+                    else if(status.equals("APPROVED")){
+                        //add the player to the list
+                        players.add(player);
+                        //tell the club with an alert that the player addition was successful
+                        Platform.runLater(() -> {
+
+                            //clear the observable list and add all the players again
+                            try {
+                                Client.observablePlayerList.add(player);
+                            } catch (Exception e) {
+                                System.out.println("Observable list error");
+                            }
+                            //show alert
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Success");
+                            alert.setHeaderText("Task Successfully Completed ☺️");
+                            alert.setContentText("The player has been added to your team");
+                            alert.showAndWait();
+                        });
+
+                    }
+                }
+
+
+                else if (o instanceof BuyConfirmation) {
                     BuyConfirmation bc = (BuyConfirmation) o;
                     Player player = bc.getPlayer();
+
 
                     Platform.runLater(() -> {
                         // Remove the player from the regular auctioned player list
@@ -54,6 +97,7 @@ public class ReadThreadClient implements Runnable {
                             }
                         }
                         // Also update the observable auctioned player list
+                        Client.observableAuctionedPlayerList.clear();
                         Client.observableAuctionedPlayerList.setAll(Client.auctionedPlayerList);
 
                         // If the client is the buyer, add the player to their team
@@ -62,6 +106,8 @@ public class ReadThreadClient implements Runnable {
                             //clear the observable list and add all the players again
                             Client.getObservablePlayerList().clear();
                             Client.getObservablePlayerList().addAll(Client.getPlayers());
+//                            System.out.println("Number of player in the club "+Client.getClientClubName()+" is "+Client.getPlayers().size());
+
                         }
                         // If the client is the seller, remove the player from their team
                         else if (Client.getClientClubName().equals(player.getClub())) {
@@ -72,14 +118,38 @@ public class ReadThreadClient implements Runnable {
                             Client.getObservablePlayerList().addAll(Client.getPlayers());
                         }
                     });
+//                    System.out.println("After buy confirmation");
+//                    System.out.println(player);
+                    player.setClub(bc.getDestinationClub());
+                    player.setAuctionState(false);
                 }
+                else if(o instanceof AuctionUpdate){
+                    AuctionUpdate au = (AuctionUpdate) o;
+                    Player player = au.getPlayer();
 
+                    System.out.println("Club "+Client.getClientClubName()+" got the auction update of player "+player.getName());
+                    System.out.println("Before adding the player in the auction list the size of the list is "+Client.auctionedPlayerList.size());
+                    Platform.runLater(() -> {
+                        // Add the player to the auctioned player list
+                        Client.auctionedPlayerList.add(player);
+                        // Also update the observable auctioned player list
+                        Client.observableAuctionedPlayerList.clear();
+                        Client.observableAuctionedPlayerList.setAll(Client.auctionedPlayerList);
+                        //show an information alert that the player is now in auction
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Auction Update");
+                        alert.setHeaderText("Task Successfully Completed ☺️");
+                        alert.setContentText("Player " + player.getName() + " is now in auction");
+                        alert.showAndWait();
 
-
-
+                    });
+                    System.out.println("After adding the player, Number of player in the auction player list "+Client.auctionedPlayerList.size());
+                }
             }
         } catch (Exception e) {
             System.out.println("ReadThreadClient e jhamela");
+            e.printStackTrace();
+
         }
     }
 }

@@ -56,6 +56,17 @@ public class FileManager {
         return players;
 
     }
+    public void saveAuctionList(List<Player> auctionedList) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/resources/data/auction-list.txt"))) {
+            for (Player player : auctionedList) {
+                bw.write(player.getName() + "," + player.getPrice() + "\n");
+            }
+            System.out.println("Auction list saved successfully");
+        } catch (IOException e) {
+            System.out.println("Could not write Auctioned Player data to the file: src/main/resources/data/auction-list.txt");
+            e.printStackTrace();
+        }
+    }
 
     //writing the player data to the file after completion of the program
     public void savePlayers(List<Player> players){
@@ -82,7 +93,5 @@ public class FileManager {
                 System.out.println("Could not close the file: " + this.filename);
             }
         }
-
-
     }
 }

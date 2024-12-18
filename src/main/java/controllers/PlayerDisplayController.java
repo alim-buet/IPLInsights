@@ -58,6 +58,7 @@ public class PlayerDisplayController implements Initializable {
 
     @FXML
     public void showPlayerInfo(Player p) {
+        System.out.println("Showing player info for " + p.getName());
         if (p == null) {
             return;
         }
@@ -78,15 +79,36 @@ public class PlayerDisplayController implements Initializable {
         salaryLabel.setDisable(false);
 
         // Set player image
-        Image playerImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/playerImages/" + p.getName() + ".png")));
+        Image playerImage;
+        try {
+            playerImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/playerImages/" + p.getName() + ".png")));
+        }
+        catch (Exception e) {
+            System.out.println("Player image not found");
+            playerImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/playerImages/generic-player.png")));
+        }
         this.playerImage.setImage(playerImage);
 
         // Set country flag
-        Image cflag = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/flags/" + p.getCountry() + ".png")));
+        Image cflag;
+        try {
+            cflag = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/flags/" + p.getCountry() + ".png")));
+        }
+        catch (Exception e) {
+            System.out.println("Country flag not found");
+            cflag = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/flags/generic-country.png")));
+        }
         countryImage.setImage(cflag);
 
         // Set club logo
-        Image clublogo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/clubLogos/" + p.getClub() + ".png")));
+        Image clublogo;
+        try {
+            clublogo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/clubLogos/" + p.getClub() + ".png")));
+        }
+        catch (Exception e) {
+            System.out.println("Club logo not found");
+            clublogo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/clubLogos/generic-logo.png")));
+        }
         clubImage.setImage(clublogo);
 
         // If the user is in CLUB mode
@@ -106,8 +128,11 @@ public class PlayerDisplayController implements Initializable {
 
     @FXML
     public void showPlayerInfo() {
+        System.out.println("Now the player list view contains number of players: " + playerListView.getItems().size());
         String name = playerListView.getSelectionModel().getSelectedItem();
+
         Player p = playerDatabase.searchByName(name);
+//        System.out.println("Selected player name: " + name+" and club: "+p.getClub());
 
         // Show player info based on user mode
         if (Client.getUserMode() == UserMode.GUEST) {
@@ -209,6 +234,7 @@ public class PlayerDisplayController implements Initializable {
             // Create AuctionRequest DTO and send to server
             try {
                 networkUtil.write(new AuctionRequest(p.getName(), p.getClub(), p.getPrice()));
+                System.out.println("Auction request sent from playercontroller class for " + p.getName());
                 loadPlayers(); // Reload players with updated observable list
                 resetPlayerInfo(); // Reset player info
             } catch (Exception e) {

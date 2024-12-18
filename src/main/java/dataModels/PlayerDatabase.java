@@ -1,7 +1,8 @@
 package dataModels;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import server.Server;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +44,10 @@ public class PlayerDatabase
             e.printStackTrace();
         }
 
+    }
+    public void saveAuctionList(List<Player> auctionedList) {
+
+        fileManager.saveAuctionList(auctionedList);
     }
     public PlayerDatabase(String filename)
     {

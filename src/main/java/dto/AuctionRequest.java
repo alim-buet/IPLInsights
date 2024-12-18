@@ -12,7 +12,6 @@ public class AuctionRequest implements Serializable {
         this.price = price;
     }
 
-
     public String getClubName() {
         return clubName;
     }

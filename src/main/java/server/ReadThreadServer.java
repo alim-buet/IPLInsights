@@ -91,11 +91,17 @@ public class ReadThreadServer implements Runnable {
                     }
 
                 }
-                else if(o instanceof BuyRequest){
+                else if(o instanceof LogoutRequest logoutRequest){
+                    //a club wants to logout. we will get the club name and remove the club from the clientMap
+
+                    clientMap.remove(logoutRequest.getClubName());
+                    System.out.println("Club "+logoutRequest.getClubName()+" logged out");
+
+                }
+                else if(o instanceof BuyRequest buyRequest){
                     //a club wants to buy a player. we will get the player name and the club name and the price. we will search the player in the database
                     //and if the player is found, we will update the player's club name and price and send a message to the client that the player is bought
 
-                    BuyRequest buyRequest = (BuyRequest) o;
                     Player player = playerDatabase.searchByName(buyRequest.getPlayer().getName());
                     System.out.println("Buy request of player "+buyRequest.getPlayer().getName()+" by club "+buyRequest.getDestinationClub()+" received by the server");
                     if(player != null){
@@ -108,18 +114,23 @@ public class ReadThreadServer implements Runnable {
                         }
                         player.setClub(buyRequest.getDestinationClub());
                         player.setAuctionState(false);
-
+//                        System.out.println("after buying the player ");
+//                        System.out.println(player);
+                        //the player should be removed from the auction list
+                        Server.auctionedPlayerList.remove(player);
+                        System.out.println("number of player in the auction player list "+Server.auctionedPlayerList.size());
                     }
-
 
                 }
                 else if(o instanceof AuctionRequest auctionRequest){
                     //a club wants to sell one of its player-> get the dto-> extract the player-> set the auction state and price -> and send the player info as auction message to all the clubs other than the seller club, they will update their ends ui
                     Player player = playerDatabase.searchByName(auctionRequest.getPlayerName());
+                    System.out.println("Auction request from club "+auctionRequest.getClubName()+" for player "+auctionRequest.getPlayerName()+" received by the server");
+
                     if(player != null){
                         player.setAuctionState(true);
                         player.setPrice(auctionRequest.getPrice());
-                        networkUtil.write(player);
+                        Server.auctionedPlayerList.add(player);
                         for(String clubName: clientMap.keySet()){
                             if(!clubName.equals(auctionRequest.getClubName())){
                                 clientMap.get(clubName).write(new AuctionUpdate(player));
@@ -128,13 +139,20 @@ public class ReadThreadServer implements Runnable {
                     }
 
                 }
-                else if(o instanceof Player){
-                    //a club has created a new player and want to update its info everywhere.
-                    Player player = (Player) o;
-                    playerDatabase.addPlayer(player);
-
-
+                else if(o instanceof PlayerAddRequest playerAddRequest){
+                    //a club wants to add a player to the database. we will get the dto-> extract the player-> check if there is any player with the same name-> if the player is unique, then we will add the player to the main database and then send the dto back with the message being approved, and if there is any player already in the database with the same name, then we will send the dto back with the msg that rejected
+                    Player player = playerAddRequest.getPlayer();
+                    if(playerDatabase.searchByName(player.getName()) == null){
+                        playerDatabase.addPlayer(player);
+                        networkUtil.write(new PlayerAddRequest(player, "APPROVED"));
+                        System.out.println("Player "+player.getName()+" added to the database");
+                    }
+                    else{
+                        networkUtil.write(new PlayerAddRequest(player, "REJECTED"));
+                        System.out.println("Player "+player.getName()+" already in the database");
+                    }
                 }
+
 
 
                 else{

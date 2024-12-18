@@ -2,7 +2,9 @@ package dto;
 
 import dataModels.Player;
 
-public class AuctionUpdate {
+import java.io.Serializable;
+
+public class AuctionUpdate implements Serializable {
     Player player;
 
     public AuctionUpdate(Player player) {

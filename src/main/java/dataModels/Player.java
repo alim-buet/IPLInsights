@@ -22,7 +22,7 @@ public class Player implements Serializable {
     private byte[] pfpBytes;
     private boolean auctioned;
     private double price;
-    public Player(String name, String country, int age, double height, String club, String position, int number, double weeklySalary) {
+    public Player(String name, String country, int age, double height, String club, String position, int number, double weeklySalary)  {
         this.name = name;
         this.country = country;
         this.age = age;
@@ -32,14 +32,19 @@ public class Player implements Serializable {
         this.number = number;
         this.weeklySalary = weeklySalary;
         this.auctioned = false;
-        this.setpfp();
+        try {
+            this.setpfp();
+        } catch (IOException e) {
+            System.out.println("Error loading player image");
+        }
 
     }
-    public void setpfp()  {
+    public void setpfp() throws IOException {
         try {
             pfpBytes = Files.readAllBytes(Paths.get("src/main/resources/playerImages/"+name+".png"));
         } catch (IOException e) {
-            System.out.println("Error in loading player image");
+            pfpBytes = Files.readAllBytes(Paths.get("src/main/resources/playerImages/generic-player.png"));
+            System.out.println("Generic Player loaded");
         }
     }
     public Image getPfp() {

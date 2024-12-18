@@ -2,9 +2,8 @@ package server;
 //import database class
 import dataModels.Player;
 import dataModels.PlayerDatabase;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
@@ -25,7 +24,16 @@ public class Server {
         playerDatabase = new PlayerDatabase("src/main/resources/data/players.txt");
         playerDatabase.loadAuctionList();
         auctionedPlayerList = playerDatabase.getAuctionList();
+        System.out.println("Number of auctioned players: " + auctionedPlayerList.size());
         System.out.println("Player loading successful");
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Server shutting down");
+            playerDatabase.saveAuctionList(auctionedPlayerList);
+
+            // Save the player list too
+            playerDatabase.savePlayers();
+            System.out.println("Player list saved successfully");
+        }));
         //
         try {
             serverSocket = new ServerSocket(port);
@@ -47,6 +55,7 @@ public class Server {
 
     public static void main(String[] args) {
         new Server();
+
     }
 
 }
