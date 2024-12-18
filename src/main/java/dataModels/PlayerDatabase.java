@@ -13,14 +13,12 @@ public class PlayerDatabase
     private String filename;
     FileManager fileManager;
     public void loadAuctionList() {
-        //there is a text file in the resource folder that contains playername,price data of auctioned players, read the names then search for the player with name, and add the player in the aucitoned players list one by one
-        //the file is in the format of playername,price
-        //read the file
+        auctionList = new ArrayList<>();
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader("@../../resources/data/auctionedPlayers.txt"));
+            br = new BufferedReader(new FileReader("src/main/resources/data/auction-list.txt"));
         } catch (Exception e) {
-            System.out.println("aucitoned players list file read e jhamela:");
+            System.out.println("auctioned players list file read e jhamela:");
             e.printStackTrace();
         }
         String line = "";
@@ -35,9 +33,11 @@ public class PlayerDatabase
                 Player player = searchByName(name);
                 if (player != null) {
                     player.setPrice(price);
+                    player.setAuctionState(true);
                     auctionList.add(player);
                 }
             }
+            System.out.println("Auction list er player count : "+auctionList.size());
         } catch (Exception e) {
             System.out.println("aucitoned players list file read e jhamela:");
             e.printStackTrace();
@@ -57,6 +57,7 @@ public class PlayerDatabase
     }
 
     public List<Player> getAuctionList() {
+        loadAuctionList();
 
         return auctionList;
     }

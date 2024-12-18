@@ -4,6 +4,8 @@ import dataModels.Player;
 import dataModels.PlayerDatabase;
 import dataModels.UserMode;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -20,7 +22,13 @@ public class Client extends Application {
     private static Stage mainStage;
     private static Scene scene;
     public static List<Player> players; //every client will have a list of players. if the client is organizer the server will provide him the whole list. and filtered list otherwise
+    //to see the real tiem change in the list of players, we'll use observable list
+    public static ObservableList<Player> observablePlayerList = FXCollections.observableArrayList();
     public static String clientClubName;
+
+
+
+
     private static NetworkUtil sockt = new NetworkUtil();
     //the app we will run is a client which will read data from server
     private static ReadThreadClient rtc;
@@ -32,9 +40,37 @@ public class Client extends Application {
     private static String serverAddress = "127.0.0.1";
     private static final int PORT = 12345;
     public static PlayerDatabase playerDatabase;
+    public static List<Player> auctionedPlayerList;
+    //initialize the observable list with auctioned players
+    public static ObservableList<Player> observableAuctionedPlayerList = FXCollections.observableArrayList();
 
 
+    public static void setPlayerDatabase(PlayerDatabase playerDatabase) {
+        Client.playerDatabase = playerDatabase;
+    }
 
+    public static List<Player> getAuctionedPlayerList() {
+        return auctionedPlayerList;
+    }
+
+    public static void setAuctionedPlayerList(List<Player> auctionedPlayerList) {
+        Client.auctionedPlayerList = auctionedPlayerList;
+    }
+
+    public static ObservableList<Player> getObservableAuctionedPlayerList() {
+        return observableAuctionedPlayerList;
+    }
+
+    public static void setObservableAuctionedPlayerList(ObservableList<Player> observableAuctionedPlayerList) {
+        Client.observableAuctionedPlayerList = observableAuctionedPlayerList;
+    }
+    public static ObservableList<Player> getObservablePlayerList() {
+        return observablePlayerList;
+    }
+
+    public static void setObservablePlayerList(ObservableList<Player> observablePlayerList) {
+        Client.observablePlayerList = observablePlayerList;
+    }
 
     public static UserMode getUserMode() {
         return userMode;
@@ -78,6 +114,7 @@ public class Client extends Application {
     public static List<Player> getPlayers() {
         return players;
     }
+
     public static void setPlayers(List<Player> players) {
         playerDatabase = new PlayerDatabase(players);
         Client.players = players;
@@ -147,11 +184,17 @@ public class Client extends Application {
         mainStage = stage;
         stage.show();
     }
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)   {
         //we'll create a network socket for that client
-        sockt = new NetworkUtil(Client.serverAddress, Client.PORT);
+        try {
+            sockt = new NetworkUtil(Client.serverAddress, Client.PORT);
+            launch(args);
+        } catch (Exception e) {
+            System.out.println("Cannot connect to the server");
+        }
+
         //no thread for reading and writing is created yet
 
-        launch(args);
+
     }
 }

@@ -2,7 +2,9 @@ package dto;
 
 import dataModels.Player;
 
-public class BuyRequest {
+import java.io.Serializable;
+
+public class BuyRequest implements Serializable {
     private Player player;
     private String destinationClub; //club that is gonna buy that player
     public BuyRequest(Player player, String destinationClub){

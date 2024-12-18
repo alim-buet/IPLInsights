@@ -1,13 +1,14 @@
 package server;
 //import database class
+import dataModels.Player;
 import dataModels.PlayerDatabase;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.List;
 
 public class Server {
     private int port = 12345;
@@ -15,11 +16,15 @@ public class Server {
     private static PlayerDatabase playerDatabase; //static so that all threads can access it without creating an instance
     public HashMap<String, NetworkUtil> clientMap;
     //key - club name and value- networkUtil
+    public static List<Player> auctionedPlayerList;
+
 
     public Server(){
         System.out.println("Server started successfully");
         clientMap = new HashMap<>();
         playerDatabase = new PlayerDatabase("src/main/resources/data/players.txt");
+        playerDatabase.loadAuctionList();
+        auctionedPlayerList = playerDatabase.getAuctionList();
         System.out.println("Player loading successful");
         //
         try {

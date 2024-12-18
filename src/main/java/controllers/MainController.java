@@ -131,7 +131,9 @@ public class MainController implements Initializable {
 
     @FXML
     public void searchByName(ActionEvent actionEvent) {
+        System.out.println("Search by name button clicked");
         Player p = Client.playerDatabase.searchByName(searchNameTextField.getText());
+        System.out.println(p);
         if(p==null){
             //show an alert that no player found
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -196,15 +198,17 @@ public class MainController implements Initializable {
         }
     }
 
-    @FXML  public void showAuction(Event event) {
+    @FXML  public void showAuction() {
         //user clicks on the auction tab. auction view load kore client er scene oita set kora lagbe
         //load the auction view fxml file and set it as the scene of the client
+        System.out.println("Auction button clicked");
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/views/auction.fxml"));
         try {
             Client.getMainStage().getScene().setRoot(loader.load());
         } catch (Exception e) {
             System.out.println("Auction view Load korte jhamela");
+            e.printStackTrace();
         }
     }
 

@@ -2,10 +2,7 @@ package server;
 
 import dataModels.Player;
 import dataModels.PlayerDatabase;
-import dto.AuctionRequest;
-import dto.AuctionUpdate;
-import dto.BuyRequest;
-import dto.LoginCredential;
+import dto.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -83,6 +80,8 @@ public class ReadThreadServer implements Runnable {
                             List<Player> clubPlayers = playerDatabase.searchByClub(((LoginCredential) o).getClubName());
                             System.out.println("Server sending playerlist with size "+clubPlayers.size());
                             networkUtil.write(clubPlayers);
+                            //the club should also get the currently auctioned players list that the server contains.
+                            networkUtil.write(new AuctionedPlayerList(Server.auctionedPlayerList));
                         }
                         else{
                             System.out.println("The credential does not matches with the database the server has");
@@ -98,14 +97,20 @@ public class ReadThreadServer implements Runnable {
 
                     BuyRequest buyRequest = (BuyRequest) o;
                     Player player = playerDatabase.searchByName(buyRequest.getPlayer().getName());
+                    System.out.println("Buy request of player "+buyRequest.getPlayer().getName()+" by club "+buyRequest.getDestinationClub()+" received by the server");
                     if(player != null){
+
+
+                        Server.auctionedPlayerList.remove(player);
+                        //we will send the news that the player is already bought, so the other client will update their ui and remove the player form the auction list and if the destination club is = to the client club name then the client will add the palyer to its list and update the ui
+                        for(String clubName: clientMap.keySet()){
+                            clientMap.get(clubName).write(new BuyConfirmation(player,buyRequest.getDestinationClub()));
+                        }
                         player.setClub(buyRequest.getDestinationClub());
                         player.setAuctionState(false);
-                        networkUtil.write("BOUGHT");
+
                     }
-                    else{
-                        networkUtil.write("NOT_FOUND");
-                    }
+
 
                 }
                 else if(o instanceof AuctionRequest auctionRequest){
@@ -130,8 +135,6 @@ public class ReadThreadServer implements Runnable {
 
 
                 }
-
-
 
 
                 else{

@@ -60,7 +60,6 @@ public class LoginController {
             //if the response is a list of players, then we will move to the next page,for other cases show suitable alert
             if(o instanceof String){
                 if(((String) o).equalsIgnoreCase("ALREADY_CONNECTED")){
-
                     System.out.println("ALREADY_CONNECTED club trynna connect again");
                     //show an alert
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -84,12 +83,11 @@ public class LoginController {
                 // Move to the next page
                 players = (List<Player>) o;
                 Client.setPlayers(players);
+                Client.observablePlayerList.setAll(players);
                 Client.setUserMode(UserMode.CLUB);
 //                System.out.println("Size of the player list send by the server is "+players.size());
                 System.out.println("Everything is set in the login controller for a new club login");
                 Client.setClientClubName(clubname);
-
-
                 // Change the scene to signed-in.fxml view
                 try {
                     FXMLLoader loader = new FXMLLoader();
@@ -112,8 +110,6 @@ public class LoginController {
             }
 
 
-
-
         }
 
 
@@ -134,6 +130,7 @@ public class LoginController {
             // Move to the next page
             players = (List<Player>) o;
             Client.setPlayers(players);
+            Client.observablePlayerList.setAll(players);
             Client.setUserMode(UserMode.GUEST);
             System.out.println("Everything is set in the login controller for a new guest login");
 

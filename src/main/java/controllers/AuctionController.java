@@ -8,36 +8,41 @@ import dto.BuyRequest;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import server.NetworkUtil;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AuctionController implements Initializable {
 
-    // Reference to the FXML components
+    @FXML public TableColumn<Player, String> positionColumn;
+    @FXML public TableColumn<Player, Integer> numberColumn;
+    @FXML public TableColumn<Player, String> weeklySalaryColumn;
     @FXML private TableView<Player> playerTable;
     @FXML private TableColumn<Player, String> nameColumn;
     @FXML private TableColumn<Player, String> clubColumn;
     @FXML private TableColumn<Player, Integer> ageColumn;
     @FXML private TableColumn<Player, Double> heightColumn;
-    @FXML private TableColumn<Player, Double> priceColumn;
-    @FXML private TableColumn<Player, Player> buyColumn;
+    @FXML private TableColumn<Player, String> priceColumn;
+    @FXML private TableColumn<Player, Void> buyColumn;
     @FXML private Button secondaryButton;
     @FXML private Label title;
     @FXML private VBox vBox;
-    // Access to client-side data and network utilities
+
     private final PlayerDatabase playerDatabase = Client.getPlayerDatabase();
     private final NetworkUtil networkUtil = Client.getSockt();
+
+    // ObservableList for UI binding
+    private final ObservableList<Player> observableAuctionedPlayerList = Client.getObservableAuctionedPlayerList();
 
     @FXML
     private void switchToPrimary(ActionEvent event) {
@@ -47,13 +52,14 @@ public class AuctionController implements Initializable {
                 Client.getMainStage().getScene().setRoot(loader.load());
             }
         } catch (IOException e) {
-            System.err.println("auction view theke back korte problem");
+            System.err.println("Error switching view from auction: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Bind table columns to player properties
         nameColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getName()));
         clubColumn.setCellValueFactory(cellData ->
@@ -63,61 +69,73 @@ public class AuctionController implements Initializable {
         heightColumn.setCellValueFactory(cellData ->
                 new SimpleObjectProperty<>(cellData.getValue().getHeight()));
         priceColumn.setCellValueFactory(cellData ->
-                new SimpleObjectProperty<>(cellData.getValue().getPrice()));
+                new SimpleObjectProperty<>("%.0f".formatted(cellData.getValue().getPrice())));
+        positionColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getPosition()));
+        numberColumn.setCellValueFactory(cellData ->
+                new SimpleObjectProperty<>(cellData.getValue().getNumber()));
+        weeklySalaryColumn.setCellValueFactory(cellData ->
+                new SimpleObjectProperty<>("%.0f".formatted(cellData.getValue().getWeeklySalary())));
 
-        // Add Buy button dynamically to the Buy column
         buyColumn.setCellFactory(tc -> new TableCell<>() {
             private final Button buyButton = new Button("Buy");
 
             {
                 buyButton.setOnAction(e -> {
                     Player player = getTableView().getItems().get(getIndex());
-                    if (player.getClub().equals(Client.clientClubName)) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText("You can't buy your own player");
-                        alert.showAndWait();
-                    } else {
-                        Alert buyConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
-                        buyConfirmation.setTitle("Buy Player");
-                        buyConfirmation.setHeaderText("Are you sure you want to buy " +
-                                player.getName() + " for " + player.getPrice() + " INR?");
-                        //if yes clicked then handle the player buying
-                        buyConfirmation.showAndWait().ifPresent(response -> {
-                            if (response == ButtonType.OK) {
-                                handleBuyAction(player);
-                            }
-                        });
+                    if (player != null) {
+                        if (player.getClub().equals(Client.clientClubName)) {
+                            showAlert(Alert.AlertType.ERROR, "Error", "You can't buy your own player");
+                        } else {
+                            Alert buyConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
+                            buyConfirmation.setTitle("Buy Player");
+                            buyConfirmation.setHeaderText("Are you sure you want to buy " +
+                                    player.getName() + " for " + player.getPrice() + " INR?");
+                            buyConfirmation.showAndWait().ifPresent(response -> {
+                                if (response == ButtonType.OK) {
+                                    handleBuyAction(player);
+                                }
+                            });
+                        }
                     }
                 });
             }
 
             @Override
-            protected void updateItem(Player player, boolean empty) {
-                super.updateItem(player, empty);
-                if (empty || player == null) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(buyButton);
-                }
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : buyButton);
             }
         });
 
-        // Load data into the table
-        playerTable.setItems(FXCollections.observableArrayList(playerDatabase.getAuctionList()));
-    }
+        // Initialize ObservableList with data from Client
+        List<Player> playerList = Client.auctionedPlayerList;
+        observableAuctionedPlayerList.setAll(playerList);
 
+        // Bind ObservableList to TableView
+        playerTable.setItems(observableAuctionedPlayerList);
+    }
 
     private void handleBuyAction(Player player) {
         if (player != null) {
             try {
                 networkUtil.write(new BuyRequest(player, Client.getClientClubName()));
+                System.out.println(player.getName() + "'s buy request sent to the server.");
 
-                System.out.println( player.getName()+"'s dto for buy request is sent to the server..server will take care of the rest");
+                // Remove player from ObservableList after buying (example for testing)
+                observableAuctionedPlayerList.remove(player);
 
             } catch (Exception e) {
-                System.err.println("Error sending purchase request for player: "+player.getName());
+                System.err.println("Error sending purchase request for player: " + player.getName());
+                e.printStackTrace();
             }
         }
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(message);
+        alert.showAndWait();
     }
 }
