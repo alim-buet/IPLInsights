@@ -1,0 +1,249 @@
+.button {
+    -fx-background-color: transparent; /* Hollow appearance */
+    -fx-text-fill: #2c3e50; /* Dark gray text */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 25px;
+    -fx-background-radius: 50px; /* Rounder shape */
+    -fx-border-radius: 50px;
+    -fx-border-color: #2c3e50; /* Dark gray border */
+    -fx-border-width: 2px;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease-in-out; /* Smooth transition */
+}
+
+.button:hover {
+    -fx-background-color: #5a8dae; /* Lighter bluish shade */
+    -fx-text-fill: white; /* White text on hover */
+    /*-fx-padding: 12px 27px; !* Slightly larger padding to mimic scaling *!*/
+    /*-fx-border-width: 3px; !* Adjust border width for emphasis *!*/
+    -fx-border-color: #5a8dae; /* Dark gray border */
+}
+
+
+.button:pressed {
+    -fx-background-color: #497593; /* Slightly darker bluish shade on click */
+    -fx-scale: 0.95; /* Slight scale down on click */
+}
+/* Style for Buy Button */
+.buy-button {
+    -fx-background-color: transparent; /* Transparent by default */
+    -fx-text-fill: #ffffff; /* White text */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 25px;
+    -fx-background-radius: 50px; /* Fully rounded corners */
+    -fx-border-radius: 50px;
+    -fx-border-color: #4CAF50; /* Green border */
+    -fx-border-width: 2px;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+}
+
+.buy-button:hover {
+    -fx-background-color: #4CAF50; /* Bright green fill on hover */
+    -fx-text-fill: #ffffff; /* Keep text white on hover */
+    -fx-border-color: #388E3C; /* Darker green border on hover */
+}
+
+.buy-button:pressed {
+    -fx-background-color: #2E7D32; /* Darker green when pressed */
+    -fx-scale: 0.95; /* Slight scale down when clicked */
+}
+
+/* Style for Logout Button */
+/* Style for Logout Button */
+.logout-button {
+    -fx-background-color: transparent; /* Transparent by default */
+    -fx-text-fill: #000000; /* White text */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 25px;
+    -fx-background-radius: 50px; /* Fully rounded corners */
+    -fx-border-radius: 50px;
+    -fx-border-color: #ff4d4d; /* Red border */
+    -fx-border-width: 2px;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+}
+
+.logout-button:hover {
+    -fx-background-color: #ff4d4d; /* Bright red fill on hover */
+    -fx-text-fill: #ffffff; /* Keep text white on hover */
+    -fx-border-color: #ff0000; /* Darker red border on hover */
+    -fx-border-width: 0px;
+
+
+}
+
+.logout-button:pressed {
+    -fx-background-color: #cc0000; /* Darker red when pressed */
+    -fx-scale: 0.95; /* Slight scale down when clicked */
+}
+
+
+
+/* Updated Style for Text Boxes */
+.text-field {
+    -fx-background-color: #f7f7f7; /* Flat white background */
+    -fx-border-color: #dcdcdc; /* Light gray border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.text-field:focused {
+    -fx-border-color: #58d68d; /* Light green border when focused */
+    -fx-effect: dropshadow(gaussian, rgba(88, 214, 141, 0.5), 5, 0, 0, 0);
+}
+
+/* Updated Style for List Views */
+.list-view {
+    -fx-background-color: #f7f7f7; /* Flat light gray background */
+    -fx-border-color: #dcdcdc; /* Light gray border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+.list-view .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+    -fx-text-fill: black; /* Keep text black on hover */
+    /*keep the text black when selected*/
+}
+.list-view .list-cell:odd {
+    -fx-background-color: #ecf0f1; /* Very light gray for odd rows */
+}
+.list-view .list-cell:even {
+    -fx-background-color: #f7f7f7; /* Slightly lighter gray for even rows */
+}
+.list-view .list-cell:hover {
+    -fx-background-color: #d9edf7; /* Subtle blue on hover */
+}
+.list-view .list-cell:selected {
+    -fx-background-color: #5a8dae; /* Lighter bluish for selected cell */
+    -fx-text-fill: white; /* White text for selected cell */
+}
+
+/* Modern flat table style */
+.table-view {
+    -fx-background-color: #ffffff; /* Clean white background */
+    -fx-border-color: transparent; /* Remove border */
+    -fx-border-radius: 5px;
+    -fx-padding: 0; /* Ensure no padding around the table */
+}
+
+/* Remove space between header and top of the table */
+.table-view .table-header-row {
+    -fx-padding: 0; /* Remove any padding */
+    -fx-margin: 0; /* Ensure no margin around the header */
+}
+
+/* Flat table header with no dark strip */
+.table-view .column-header-background {
+    -fx-background-color: transparent; /* No background strip */
+    -fx-text-fill: #34495e; /* Dark gray text for header */
+    -fx-font-weight: bold; /* Bold text */
+    -fx-font-size: 14px; /* Modern font size */
+    -fx-padding: 10px; /* Padding for clean look */
+    -fx-border-width: 0; /* No border */
+    -fx-alignment: center; /* Center text in the header */
+}
+
+/* Column header text alignment */
+.table-view .column-header {
+    -fx-alignment: center; /* Centered header text */
+    -fx-padding: 0 10px; /* Padding for spacing */
+}
+
+/* Row styling */
+.table-view .table-row-cell:odd {
+    -fx-background-color: #f4f6f9; /* Very light gray for odd rows */
+}
+
+.table-view .table-row-cell:even {
+    -fx-background-color: #ffffff; /* White for even rows */
+}
+
+/* Hover effect for rows */
+.table-view .table-row-cell:hover {
+    -fx-background-color: #dcdfe1; /* Soft gray for hover */
+}
+
+/* Selected row styling */
+.table-view .table-row-cell:selected {
+    -fx-background-color: #2980b9; /* Bright blue for selected row */
+    -fx-text-fill: white; /* White text for contrast */
+}
+
+/* Optional: Smooth transitions for hover and selection */
+.table-view .table-row-cell {
+    -fx-effect: dropshadow(gaussian, #bdc3c7, 5, 0, 0, 1);
+    -fx-transition: all 0.2s ease;
+}
+
+
+
+
+
+
+/* Updated Style for Tabs and Tab Panes */
+.tab-pane {
+    -fx-background-color: #d9edf7; /* Light blue background */
+    -fx-border-color: #dcdcdc; /* Light gray border */
+    -fx-border-radius: 5px;
+}
+.tab {
+    -fx-background-color: transparent; /* Flat, transparent background */
+    -fx-text-fill: #2c3e50; /* Dark gray text */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px; /* Rounded corners */
+    -fx-border-color: transparent;
+    -fx-transition: all 0.3s ease-in-out;
+}
+.tab:hover {
+    -fx-background-color: #ecf0f1; /* Light gray on hover */
+}
+.tab:selected {
+    -fx-background-color: #5a8dae; /* Lighter bluish for selected tab */
+    -fx-text-fill: white; /* White text for selected tab */
+}
+
+/* Updated Style for Combo Boxes */
+.combo-box {
+    -fx-background-color: #f7f7f7; /* Flat white background */
+    -fx-border-color: #dcdcdc; /* Light gray border */
+    -fx-border-radius: 3px;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+}
+.combo-box:focused {
+    -fx-border-color: #58d68d; /* Light green border when focused */
+    -fx-effect: dropshadow(gaussian, rgba(88, 214, 141, 0.5), 5, 0, 0, 0);
+}
+.combo-box .arrow {
+    -fx-background-color: #2c3e50; /* Dark gray arrow */
+}
+.combo-box:hover {
+    -fx-background-color: #ecf0f1; /* Light gray on hover */
+}
+
+/* Updated Style for Scroll Bars */
+.scroll-bar {
+    -fx-background-color: #f7f7f7; /* Light gray background */
+    -fx-padding: 4px;
+}
+.scroll-bar .thumb {
+    -fx-background-color: #2c3e50; /* Dark gray thumb */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Add a subtle shadow to the root container */
+.root {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+    -fx-background-color: #d9edf7; /* Light blue background */
+}

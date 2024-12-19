@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vBox" alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="40.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SalaryController">
+<VBox fx:id="vBox" alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="40.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SalaryController">
     <children>
         <Label fx:id="title" alignment="CENTER" text="Total annual salary of each club">
             <font>
@@ -17,8 +17,8 @@
         </Label>
         <TableView fx:id="salaryTable" prefHeight="455.0" prefWidth="860.0">
             <columns>
-                <TableColumn fx:id="logoColumn" maxWidth="1500.0" prefWidth="40.0" style="-fx-alignment: CENTER;" />
-                <TableColumn fx:id="clubColumn" prefWidth="281.0" style="-fx-alignment: CENTER;" text="Club" />
+                <TableColumn fx:id="logoColumn" maxWidth="1500.0" prefWidth="79.2000732421875" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="clubColumn" prefWidth="377.59996032714844" style="-fx-alignment: CENTER;" text="Club" />
                 <TableColumn fx:id="salaryColumn" prefWidth="296.0" style="-fx-alignment: CENTER;" text="Salary" />
             </columns>
             <columnResizePolicy>
@@ -28,9 +28,6 @@
                 <Insets left="200.0" right="200.0" />
             </VBox.margin>
         </TableView>
-        <Button fx:id="secondaryButton" maxHeight="-Infinity" minHeight="-Infinity" onAction="#switchToPrimary" prefHeight="40.0" prefWidth="69.0" text="Back" />
+        <Button fx:id="secondaryButton" maxHeight="-Infinity" minHeight="-Infinity" onAction="#switchToPrimary" prefHeight="40.0" prefWidth="101.0" text="Back" />
     </children>
-    <padding>
-        <Insets bottom="50.0" left="20.0" top="50.0" />
-    </padding>
 </VBox>

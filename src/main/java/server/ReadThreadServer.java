@@ -55,8 +55,6 @@ public class ReadThreadServer implements Runnable {
             while(true){
                 Object o = networkUtil.read();
                 if(o instanceof String && ((String) o).equalsIgnoreCase("Guest_login")){
-                    //organizer clicked to login, so the client will send a string message "Organizer_login" and the server will send
-                    //the whole player list to the client.
                     System.out.println("Guest login request received by the server");
                     networkUtil.write(playerDatabase.getAllPlayers());
                     System.out.println("A player list with size "+playerDatabase.getAllPlayers().size()+" sent to the guest");
@@ -103,22 +101,20 @@ public class ReadThreadServer implements Runnable {
                     //and if the player is found, we will update the player's club name and price and send a message to the client that the player is bought
 
                     Player player = playerDatabase.searchByName(buyRequest.getPlayer().getName());
-                    System.out.println("Buy request of player "+buyRequest.getPlayer().getName()+" by club "+buyRequest.getDestinationClub()+" received by the server");
+                    System.out.println("Buy request of player "+buyRequest.getPlayer().getName()+" buyer club: "+buyRequest.getDestinationClub()+" received by the server");
                     if(player != null){
-
-
                         Server.auctionedPlayerList.remove(player);
                         //we will send the news that the player is already bought, so the other client will update their ui and remove the player form the auction list and if the destination club is = to the client club name then the client will add the palyer to its list and update the ui
+                        String prevClub = player.getClub();
                         for(String clubName: clientMap.keySet()){
-                            clientMap.get(clubName).write(new BuyConfirmation(player,buyRequest.getDestinationClub()));
+                            clientMap.get(clubName).write(new BuyConfirmation(player,buyRequest.getDestinationClub(),prevClub));
                         }
                         player.setClub(buyRequest.getDestinationClub());
                         player.setAuctionState(false);
 //                        System.out.println("after buying the player ");
 //                        System.out.println(player);
                         //the player should be removed from the auction list
-                        Server.auctionedPlayerList.remove(player);
-                        System.out.println("number of player in the auction player list "+Server.auctionedPlayerList.size());
+//                        System.out.println("number of player in the auction player list "+Server.auctionedPlayerList.size());
                     }
 
                 }

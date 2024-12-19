@@ -30,7 +30,13 @@ public class ReadThreadClient implements Runnable {
 
         try {
             while(true){
-                Object o = networkUtil.read();
+                Object o = null;
+                try {
+                    o = networkUtil.read();
+                } catch (Exception e) {
+                    System.out.println("Client disconnected");
+                    break;
+                }
                 //the client club can get auction update , buy request etc from the server, we'll handle them later
                 //but at the very beginning , the client will get the list of auctioned players
                 if (o instanceof AuctionedPlayerList) {
@@ -86,40 +92,40 @@ public class ReadThreadClient implements Runnable {
                 else if (o instanceof BuyConfirmation) {
                     BuyConfirmation bc = (BuyConfirmation) o;
                     Player player = bc.getPlayer();
-
+                    //the seller club should remove its player from the list and the result should be seem immediately in the ui
+                    System.out.println("Buy confirmation for player "+player.getName()+ "  Player current club: "+player.getClub()+  " buyer club "+bc.getDestinationClub()+" received by the client");
+                    //make this block synchronized so that only one thread can access this block at a time
 
                     Platform.runLater(() -> {
+                        System.out.println("Buy confirmation er run later e duklo");
                         // Remove the player from the regular auctioned player list
-                        for (int i = 0; i < Client.auctionedPlayerList.size(); i++) {
-                            if (Client.auctionedPlayerList.get(i).getName().equals(player.getName())) {
-                                Client.auctionedPlayerList.remove(i);
-                                break;
-                            }
-                        }
+                        Client.auctionedPlayerList.remove(player);
                         // Also update the observable auctioned player list
                         Client.observableAuctionedPlayerList.clear();
                         Client.observableAuctionedPlayerList.setAll(Client.auctionedPlayerList);
 
                         // If the client is the buyer, add the player to their team
                         if (Client.getClientClubName().equals(bc.getDestinationClub())) {
+                            System.out.println("Buy confirmation er run later e buyer er kaj korlo");
                             Client.getPlayers().add(player);
                             //clear the observable list and add all the players again
                             Client.getObservablePlayerList().clear();
                             Client.getObservablePlayerList().addAll(Client.getPlayers());
 //                            System.out.println("Number of player in the club "+Client.getClientClubName()+" is "+Client.getPlayers().size());
-
                         }
                         // If the client is the seller, remove the player from their team
-                        else if (Client.getClientClubName().equals(player.getClub())) {
-                            Client.getPlayers().remove(player);
+                        else if (Client.getClientClubName().equals(bc.getPrevClub())) {
+                            System.out.println("Buy confirmation er run later e seller er kaj korlo");
 
+                            Client.getPlayers().remove(player);
                             //clear the observable list and add all the players again
                             Client.getObservablePlayerList().clear();
                             Client.getObservablePlayerList().addAll(Client.getPlayers());
+                            System.out.println("After removing the player the number of playeri n the list is "+Client.getObservablePlayerList().size());
                         }
                     });
-//                    System.out.println("After buy confirmation");
-//                    System.out.println(player);
+
+
                     player.setClub(bc.getDestinationClub());
                     player.setAuctionState(false);
                 }

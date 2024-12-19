@@ -14,12 +14,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="456.0" prefWidth="1240.0" spacing="30.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PlayerDisplayController">
+<HBox prefHeight="456.0" prefWidth="1240.0" spacing="30.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PlayerDisplayController">
     <children>
         <VBox prefHeight="456.0" prefWidth="1240.0">
             <children>
                 <ListView fx:id="playerListView" onKeyPressed="#showPlayerInfo" onMouseClicked="#showPlayerInfo" prefHeight="386.0" prefWidth="609.0" />
-                <Button fx:id="testLoad" maxHeight="-Infinity" minHeight="-Infinity" onAction="#loadPlayers" prefHeight="40.0" prefWidth="598.0" text="Show all players">
+                <Button fx:id="testLoad" maxHeight="-Infinity" minHeight="-Infinity" onAction="#loadPlayers" prefHeight="46.0" prefWidth="534.0" text="Show all players">
                     <VBox.margin>
                         <Insets top="15.0" />
                     </VBox.margin>

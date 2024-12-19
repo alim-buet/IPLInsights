@@ -14,7 +14,7 @@ Suryakumar Yadav,India,34,1.78,Mumbai Indians,Batsman,63,17000000
 Sam Curran,England,26,1.75,Punjab Kings,Allrounder,58,20000000
 Mohammed Shami,India,34,1.73,Gujarat Titans,Bowler,,14000000
 Yuzvendra Chahal,India,33,1.7,Rajasthan Royals,Bowler,3,15000000
-Cameron Green,Australia,25,1.93,Mumbai Indians,Allrounder,25,21000000
+Cameron Green,Australia,25,1.93,Kolkata Knight Riders,Allrounder,25,21000000
 Nicholas Pooran,West Indies,29,1.83,Lucknow Super Giants,Wicketkeeper,,16500000
 Hardik Pandya,India,30,1.83,Gujarat Titans,Allrounder,33,18500000
 Faf du Plessis,South Africa,40,1.78,Royal Challengers Bangalore,Batsman,18,17500000
@@ -47,13 +47,13 @@ Ishan Kishan,India,26,1.68,Mumbai Indians,Wicketkeeper,23,20000000
 Lockie Ferguson,New Zealand,33,1.85,Kolkata Knight Riders,Bowler,69,17500000
 Harshal Patel,India,33,1.75,Royal Challengers Bangalore,Bowler,,15000000
 Mustafizur Rahman,Bangladesh,29,1.8,Delhi Capitals,Bowler,90,14000000
-Litton Das,Bangladesh,30,1.7,Mumbai Indians,Wicketkeeper,16,10000000
+Litton Das,Bangladesh,30,1.7,Kolkata Knight Riders,Wicketkeeper,16,10000000
 Lionel Messi,Argentina,36,1.8,Kolkata Knight Riders,Allrounder,10,50000000
 Cristiano Ronaldo,Portugal,37,1.87,Royal Challengers Bangalore,Batsman,7,100
 Mohammed Alim Uddin,Bangladesh,20,1.89,Delhi Capitals,Allrounder,67,10000000
-Shakib Al Hasan,Bangladesh,35,1.75,Kolkata Knight Riders,Allrounder,75,15000000
+Shakib Al Hasan,Bangladesh,35,1.75,Sunrisers Hyderabad,Allrounder,75,15000000
 Taskin Ahmed,Bangladesh,29,1.89,Mumbai Indians,Bowler,88,18000000
 Tamim Iqbal,Bangladesh,36,1.77,Gujarat Titans,Batsman,23,1200000
 Matheesha Pathirana,Sri Lanka,22,1.91,Punjab Kings,Bowler,77,13000000
-Bhanuka Rajapaksa,Sri Lanka,33,1.78,Kolkata Knight Riders,Batsman,34,13000000
+Bhanuka Rajapaksa,Sri Lanka,33,1.78,Punjab Kings,Batsman,34,13000000
 David Miller,South Africa,34,1.88,Gujarat Titans,Batsman,32,1900000

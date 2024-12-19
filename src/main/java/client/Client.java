@@ -178,8 +178,7 @@ public class Client extends Application {
         loader.setLocation(getClass().getResource("/views/login.fxml"));
 
         scene = new Scene(loader.load());
-        //scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/views/style.css")).toExternalForm());
-
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/guest.css")).toExternalForm());
         stage.setScene(scene);
         mainStage = stage;
         stage.show();

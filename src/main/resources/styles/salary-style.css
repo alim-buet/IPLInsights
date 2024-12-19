@@ -1,0 +1,59 @@
+/* General VBox Styling */
+.VBox {
+    -fx-background-color: #1e1e2f; /* Dark theme background */
+    -fx-alignment: center;
+    -fx-spacing: 40.0;
+    -fx-padding: 50 20 50 20; /* Padding to match the FXML */
+}
+
+/* Label Styling */
+.Label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 21px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+/* TableView Styling */
+.TableView {
+    -fx-background-color: #2c2c3a;
+    -fx-border-color: #3a3a4f;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 2, 2);
+    -fx-padding: 10;
+}
+
+.TableView .column-header-background {
+    -fx-background-color: #3b5998; /* Blue header background */
+}
+
+.TableColumn {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Button Styling */
+.Button {
+    -fx-background-color: #3b5998;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+    -fx-font-family: "Arial";
+    -fx-background-radius: 5;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+    -fx-border-color: #4a69bd;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 1, 1);
+}
+
+.Button:hover {
+    -fx-background-color: #4a69bd; /* Lighter blue on hover */
+}
+
+.Button:pressed {
+    -fx-background-color: #2e4372; /* Darker blue when clicked */
+}

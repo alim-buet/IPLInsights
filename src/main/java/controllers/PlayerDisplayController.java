@@ -128,7 +128,7 @@ public class PlayerDisplayController implements Initializable {
 
     @FXML
     public void showPlayerInfo() {
-        System.out.println("Now the player list view contains number of players: " + playerListView.getItems().size());
+//        System.out.println("Now the player list view contains number of players: " + playerListView.getItems().size());
         String name = playerListView.getSelectionModel().getSelectedItem();
 
         Player p = playerDatabase.searchByName(name);

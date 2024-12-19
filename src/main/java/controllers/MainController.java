@@ -83,8 +83,12 @@ public class MainController implements Initializable {
         if(alert.getResult()==ButtonType.OK){
             try {
                 //network connection close kore dite hobe
-                Client.getSockt().write(new LogoutRequest(Client.getClientClubName()));
-
+                if(Client.getUserMode()==UserMode.CLUB) {
+                    Client.getSockt().write(new LogoutRequest(Client.getClientClubName()));
+                }
+                else if(Client.getUserMode()==UserMode.GUEST){
+                    Client.getSockt().write(new LogoutRequest("GUEST"));
+                }
                 Client.getSockt().closeConnection();
                 //notun socket open kora lagbe client er jonno
                 Client.setSockt(new NetworkUtil("127.0.0.1",12345));
@@ -101,7 +105,6 @@ public class MainController implements Initializable {
                 System.out.println("logout kore login view Load korte jhamela");
             }
         }
-
 
     }
     @FXML
@@ -179,6 +182,9 @@ public class MainController implements Initializable {
         //load the demographics view fxml file and set it as the scene of the client
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/views/demographics.fxml"));
+        //set the css styling for this
+
+//        Client.getMainStage().getScene().getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/guest.css")).toExternalForm());
         try {
             Client.getMainStage().getScene().setRoot(loader.load());
         } catch (Exception e) {

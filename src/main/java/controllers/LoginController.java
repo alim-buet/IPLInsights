@@ -17,6 +17,7 @@ import dto.LoginCredential;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 
 public class LoginController {
@@ -94,11 +95,14 @@ public class LoginController {
 
                     loader.setLocation(getClass().getResource("/views/signed-in.fxml"));
 
+
                     Scene newScene = new Scene(loader.load());
-                    System.out.println("ei line execute");
+//                    System.out.println("ei line execute");
+                    newScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/guest.css")).toExternalForm());
+
                     Client.getMainStage().setScene(newScene);
                     Client.getMainStage().show();
-                    System.out.println("ei line execute hoise");
+//                    System.out.println("ei line execute hoise");
 
                 } catch (IOException e) {
 
@@ -143,6 +147,8 @@ public class LoginController {
 
                 Scene newScene = new Scene(loader.load());
                 System.out.println("guest login fxml loading ... done");
+                newScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/guest.css")).toExternalForm());
+
 //                System.out.println("ei line execute");
                 Client.getMainStage().setScene(newScene);
                 Client.getMainStage().show();
