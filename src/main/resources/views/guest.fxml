@@ -89,13 +89,13 @@
                                                         <HBox alignment="CENTER" prefHeight="24.0" prefWidth="1040.0" spacing="10.0">
                                                             <children>
                                                                 <Label text="From" />
-                                                <TextField fx:id="salaryRangeFromText" prefHeight="40.0" prefWidth="160.0" />
+                                                                <TextField fx:id="salaryRangeFromText" prefHeight="40.0" prefWidth="160.0" />
                                                                 <Label text="To">
                                                                     <HBox.margin>
                                                                         <Insets left="20.0" />
                                                                     </HBox.margin>
                                                                 </Label>
-                                                <TextField fx:id="salaryRangeToText" prefHeight="40.0" prefWidth="160.0" />
+                                                                <TextField fx:id="salaryRangeToText" prefHeight="40.0" prefWidth="160.0" />
                                                                 <Button fx:id="nameSearchButton11" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#searchBySalary" prefHeight="40.0" prefWidth="119.0" text="Search">
                                                                     <HBox.margin>
                                                                         <Insets left="40.0" />
@@ -151,15 +151,15 @@
                                                             <padding>
                                                                 <Insets left="5.0" right="5.0" top="30.0" />
                                                             </padding>
-                                             <children>
-                                                <Label text="Select club: " translateY="-20.0">
-                                                   <font>
-                                                      <Font size="13.0" />
-                                                   </font>
-                                                </Label>
-                                                <ComboBox fx:id="selectedClubForMaxAge" editable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0" prefWidth="250.0" promptText="Club..." translateY="-20.0" />
-                                                <Button fx:id="nameSearchButton131" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#maxAgeSearch" prefHeight="38.0" prefWidth="110.0" text="Search" translateY="-20.0" />
-                                             </children>
+                                                            <children>
+                                                                <Label text="Select club: " translateY="-20.0">
+                                                                    <font>
+                                                                        <Font size="13.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <ComboBox fx:id="selectedClubForMaxAge" editable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0" prefWidth="250.0" promptText="Club..." translateY="-20.0" />
+                                                                <Button fx:id="nameSearchButton131" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#maxAgeSearch" prefHeight="38.0" prefWidth="110.0" text="Search" translateY="-20.0" />
+                                                            </children>
                                                         </HBox>
                                                     </children>
                                                 </AnchorPane>
@@ -173,15 +173,15 @@
                                                             <padding>
                                                                 <Insets left="5.0" right="5.0" top="30.0" />
                                                             </padding>
-                                             <children>
-                                                <Label text="Select club: " translateY="-22.0">
-                                                   <font>
-                                                      <Font size="13.0" />
-                                                   </font>
-                                                </Label>
-                                                <ComboBox fx:id="selectedClubForMaxHeight" editable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0" prefWidth="250.0" promptText="Club..." translateY="-22.0" />
-                                                <Button fx:id="nameSearchButton1311" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#maxHeightSearch" prefHeight="38.0" prefWidth="110.0" text="Search" translateY="-22.0" />
-                                             </children>
+                                                            <children>
+                                                                <Label text="Select club: " translateY="-22.0">
+                                                                    <font>
+                                                                        <Font size="13.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <ComboBox fx:id="selectedClubForMaxHeight" editable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0" prefWidth="250.0" promptText="Club..." translateY="-22.0" />
+                                                                <Button fx:id="nameSearchButton1311" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#maxHeightSearch" prefHeight="38.0" prefWidth="110.0" text="Search" translateY="-22.0" />
+                                                            </children>
                                                         </HBox>
                                                     </children>
                                                 </AnchorPane>
@@ -200,15 +200,15 @@
                                                             <padding>
                                                                 <Insets left="5.0" right="5.0" top="30.0" />
                                                             </padding>
-                                             <children>
-                                                <Label text="Select club: " translateY="-31.0">
-                                                   <font>
-                                                      <Font size="13.0" />
-                                                   </font>
-                                                </Label>
-                                                <ComboBox fx:id="SelectedClubForMaxSalary" editable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0" prefWidth="250.0" promptText="Club..." translateY="-31.0" />
-                                                <Button fx:id="nameSearchButton13111" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#maxSalarySearch" prefHeight="38.0" prefWidth="110.0" text="Search" translateY="-31.0" />
-                                             </children>
+                                                            <children>
+                                                                <Label text="Select club: " translateY="-31.0">
+                                                                    <font>
+                                                                        <Font size="13.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <ComboBox fx:id="SelectedClubForMaxSalary" editable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0" prefWidth="250.0" promptText="Club..." translateY="-31.0" />
+                                                                <Button fx:id="nameSearchButton13111" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#maxSalarySearch" prefHeight="38.0" prefWidth="110.0" text="Search" translateY="-31.0" />
+                                                            </children>
                                                         </HBox>
                                                     </children>
                                                 </AnchorPane>
@@ -219,7 +219,7 @@
                                         <Insets />
                                     </opaqueInsets>
                                 </TabPane>
-                        <HBox translateX="222.0" translateY="-30.0" />
+                                <HBox translateX="222.0" translateY="-30.0" />
                                 <fx:include fx:id="playerDisplayC" source="player-display.fxml" />
                             </children>
                             <padding>

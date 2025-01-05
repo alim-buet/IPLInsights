@@ -11,26 +11,26 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="login-pane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
-    <VBox alignment="CENTER" layoutX="374.0" layoutY="374.0" prefHeight="345.0" prefWidth="532.0" spacing="20.0">
-        <TextField id="usernameField" fx:id="clubname_field" prefHeight="50.0" prefWidth="532.0" promptText="Club Name" styleClass="input-field">
-         <font>
-            <Font size="18.0" />
-         </font></TextField>
-        <PasswordField id="passwordField" fx:id="password_field" prefHeight="50.0" prefWidth="532.0" promptText="Password" styleClass="input-field">
-         <font>
-            <Font size="18.0" />
-         </font></PasswordField>
-        <Button fx:id="login_button" onAction="#login_button_clicked" prefHeight="25.0" prefWidth="313.0" styleClass="login-button" text="Log In" />
-        <Button fx:id="guest_login_button" mnemonicParsing="false" onAction="#guest_button_clicked" styleClass="guest_login_button" text="Login as Guest" />
-    </VBox>
-   <ImageView fitHeight="430.0" fitWidth="462.0" layoutX="423.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+   <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
       <image>
-         <Image url="@../clubLogos/iplLogo.png" />
+         <Image url="@../media/bg.jpg" />
       </image>
    </ImageView>
-   <Label layoutX="550.0" layoutY="14.0" text="IPL Insights" textFill="#960000">
+   <Label layoutX="550.0" layoutY="14.0" textFill="#960000">
       <font>
          <Font size="36.0" />
       </font>
    </Label>
+    <VBox alignment="CENTER" layoutX="374.0" layoutY="374.0" prefHeight="345.0" prefWidth="532.0" spacing="20.0" translateX="270.0" translateY="-100.0">
+        <TextField id="usernameField" fx:id="clubname_field" prefHeight="50.0" prefWidth="532.0" promptText="Club Name" styleClass="input-field" stylesheets="@../styles/login-style.css">
+         <font>
+            <Font size="18.0" />
+         </font></TextField>
+        <PasswordField id="passwordField" fx:id="password_field" prefHeight="50.0" prefWidth="532.0" promptText="Password" styleClass="input-field" stylesheets="@../styles/login-style.css">
+         <font>
+            <Font size="18.0" />
+         </font></PasswordField>
+        <Button id="login_button" fx:id="login_button" onAction="#login_button_clicked" prefHeight="25.0" prefWidth="313.0" styleClass="login-button" stylesheets="@../styles/login-style.css" text="Log In" />
+        <Button id="guest_login_button" fx:id="guest_login_button" mnemonicParsing="false" onAction="#guest_button_clicked" styleClass="guest_login_button" stylesheets="@../styles/login-style.css" text="Login as Guest" />
+    </VBox>
 </AnchorPane>

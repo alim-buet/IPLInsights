@@ -43,11 +43,9 @@ public class ReadThreadClient implements Runnable {
                     AuctionedPlayerList apl = (AuctionedPlayerList) o;
                     List<Player> auctionedPlayerList = apl.getAuctionedPlayerList();
 
-                    auctionedPlayerList.removeIf(player -> player.getClub().equals(Client.getClientClubName()));
+                    auctionedPlayerList.removeIf(player -> player.getClub().equals(Client.getClientClubName())); //nij club er player ke list theke remove kora lagbe
 
                     Client.auctionedPlayerList = auctionedPlayerList;
-
-//                    Platform.runLater(() -> Client.observableAuctionedPlayerList.setAll(Client.auctionedPlayerList));
                 }
                 else if(o instanceof PlayerAddRequest){
                     PlayerAddRequest par = (PlayerAddRequest) o;
@@ -59,7 +57,7 @@ public class ReadThreadClient implements Runnable {
                             //show alert
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Error");
-                            alert.setHeaderText("Task Successfully Unsuccessful 😒");
+                            alert.setHeaderText("Task Successfully Unsuccessful :(");
                             alert.setContentText("Please try again with a different name");
                             alert.showAndWait();
                         });
@@ -93,35 +91,31 @@ public class ReadThreadClient implements Runnable {
                     BuyConfirmation bc = (BuyConfirmation) o;
                     Player player = bc.getPlayer();
                     //the seller club should remove its player from the list and the result should be seem immediately in the ui
-                    System.out.println("Buy confirmation for player "+player.getName()+ "  Player current club: "+player.getClub()+  " buyer club "+bc.getDestinationClub()+" received by the client");
+                    //System.out.println("Buy confirmation for player "+player.getName()+ "  Player current club: "+player.getClub()+  " buyer club "+bc.getDestinationClub()+" received by the client");
                     //make this block synchronized so that only one thread can access this block at a time
 
                     Platform.runLater(() -> {
-                        System.out.println("Buy confirmation er run later e duklo");
+                        //System.out.println("Buy confirmation er run later e duklo");
                         // Remove the player from the regular auctioned player list
                         Client.auctionedPlayerList.remove(player);
-                        // Also update the observable auctioned player list
                         Client.observableAuctionedPlayerList.clear();
                         Client.observableAuctionedPlayerList.setAll(Client.auctionedPlayerList);
 
-                        // If the client is the buyer, add the player to their team
                         if (Client.getClientClubName().equals(bc.getDestinationClub())) {
-                            System.out.println("Buy confirmation er run later e buyer er kaj korlo");
+                            //System.out.println("Buy confirmation er run later e buyer er kaj korlo");
                             Client.getPlayers().add(player);
-                            //clear the observable list and add all the players again
                             Client.getObservablePlayerList().clear();
                             Client.getObservablePlayerList().addAll(Client.getPlayers());
 //                            System.out.println("Number of player in the club "+Client.getClientClubName()+" is "+Client.getPlayers().size());
                         }
-                        // If the client is the seller, remove the player from their team
                         else if (Client.getClientClubName().equals(bc.getPrevClub())) {
-                            System.out.println("Buy confirmation er run later e seller er kaj korlo");
+                            //System.out.println("Buy confirmation er run later e seller er kaj korlo");
 
                             Client.getPlayers().remove(player);
                             //clear the observable list and add all the players again
                             Client.getObservablePlayerList().clear();
                             Client.getObservablePlayerList().addAll(Client.getPlayers());
-                            System.out.println("After removing the player the number of playeri n the list is "+Client.getObservablePlayerList().size());
+                            //System.out.println("After removing the player the number of playeri n the list is "+Client.getObservablePlayerList().size());
                         }
                     });
 
@@ -133,8 +127,8 @@ public class ReadThreadClient implements Runnable {
                     AuctionUpdate au = (AuctionUpdate) o;
                     Player player = au.getPlayer();
 
-                    System.out.println("Club "+Client.getClientClubName()+" got the auction update of player "+player.getName());
-                    System.out.println("Before adding the player in the auction list the size of the list is "+Client.auctionedPlayerList.size());
+                    //System.out.println("Club "+Client.getClientClubName()+" got the auction update of player "+player.getName());
+                   // System.out.println("Before adding the player in the auction list the size of the list is "+Client.auctionedPlayerList.size());
                     Platform.runLater(() -> {
                         // Add the player to the auctioned player list
                         Client.auctionedPlayerList.add(player);
@@ -149,7 +143,7 @@ public class ReadThreadClient implements Runnable {
                         alert.showAndWait();
 
                     });
-                    System.out.println("After adding the player, Number of player in the auction player list "+Client.auctionedPlayerList.size());
+                   // System.out.println("After adding the player, Number of player in the auction player list "+Client.auctionedPlayerList.size());
                 }
             }
         } catch (Exception e) {

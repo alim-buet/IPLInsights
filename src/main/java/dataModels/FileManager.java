@@ -74,13 +74,10 @@ public class FileManager {
         try {
             bw = new BufferedWriter(new FileWriter(this.filename));
             for(Player player: players){
-
                 bw.write(player.getName() + "," + player.getCountry() + "," + player.getAge() + "," + player.getHeight() + "," + player.getClub() + "," + player.getPosition() + "," + (player.getNumber()==0 ? "":player.getNumber()) + "," + String.format("%.0f",player.getWeeklySalary()) + "\n");
-
             }
 
         } catch (IOException e) {
-
             System.out.println("Could not write Player data to the file: " + this.filename);
             e.printStackTrace();
         }

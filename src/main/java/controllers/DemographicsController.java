@@ -66,14 +66,11 @@ public class DemographicsController implements Initializable {
     private ObservableList<CountryData> getCountryData() {
         ObservableList<CountryData> countryDataList = FXCollections.observableArrayList();
 
-        // Extract country-wise player count from the database
         HashMap<String, Integer> countryPlayerCounts = playerDatabase.countryWiseCOunt();
 
         for (Map.Entry<String, Integer> entry : countryPlayerCounts.entrySet()) {
             String countryName = entry.getKey();
             int playerCount = entry.getValue();
-
-            // Load the flag image
             ImageView flagImageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream(String.format("/flags/%s.png", countryName)))));
             flagImageView.setFitHeight(60);
             flagImageView.setFitWidth(100);
@@ -110,6 +107,7 @@ public class DemographicsController implements Initializable {
         public void setCountryName(String countryName) {
             this.countryName = countryName;
         }
+
 
         public int getPlayerCount() {
             return playerCount;

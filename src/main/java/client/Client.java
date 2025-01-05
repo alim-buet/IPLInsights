@@ -19,6 +19,7 @@ import java.util.Objects;
 
 //app is basically a client that will have a player list, a network util, read, write thread and a stage
 public class Client extends Application {
+
     private static Stage mainStage;
     private static Scene scene;
     public static List<Player> players; //every client will have a list of players. if the client is organizer the server will provide him the whole list. and filtered list otherwise

@@ -38,7 +38,7 @@ public class PlayerDatabase
                     auctionList.add(player);
                 }
             }
-            System.out.println("Auction list er player count : "+auctionList.size());
+//            System.out.println("Auction list er player count : "+auctionList.size());
         } catch (Exception e) {
             System.out.println("aucitoned players list file read e jhamela:");
             e.printStackTrace();

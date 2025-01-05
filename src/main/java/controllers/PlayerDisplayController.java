@@ -49,7 +49,6 @@ public class PlayerDisplayController implements Initializable {
     @FXML
     public TextField priceText;
 
-    // Get the NetworkUtil and PlayerDatabase from Client class
     NetworkUtil networkUtil = Client.getSockt();
     List<Player> players = Client.getPlayers();
     ObservableList<Player> observablePlayerList = Client.observablePlayerList;
@@ -58,7 +57,7 @@ public class PlayerDisplayController implements Initializable {
 
     @FXML
     public void showPlayerInfo(Player p) {
-        System.out.println("Showing player info for " + p.getName());
+//        System.out.println("Showing player info for " + p.getName());
         if (p == null) {
             return;
         }
@@ -71,14 +70,12 @@ public class PlayerDisplayController implements Initializable {
         positionLabel.setText(p.getPosition());
         salaryLabel.setText("%.0f".formatted(p.getWeeklySalary()) + " INR");
 
-        // Enable all the labels once data is set
         ageLabel.setDisable(false);
         heightLabel.setDisable(false);
         numberLabel.setDisable(false);
         positionLabel.setDisable(false);
         salaryLabel.setDisable(false);
 
-        // Set player image
         Image playerImage;
         try {
             playerImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/playerImages/" + p.getName() + ".png")));
@@ -89,7 +86,6 @@ public class PlayerDisplayController implements Initializable {
         }
         this.playerImage.setImage(playerImage);
 
-        // Set country flag
         Image cflag;
         try {
             cflag = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/flags/" + p.getCountry() + ".png")));
@@ -100,7 +96,6 @@ public class PlayerDisplayController implements Initializable {
         }
         countryImage.setImage(cflag);
 
-        // Set club logo
         Image clublogo;
         try {
             clublogo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/clubLogos/" + p.getClub() + ".png")));

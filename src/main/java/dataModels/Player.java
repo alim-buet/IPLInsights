@@ -44,7 +44,7 @@ public class Player implements Serializable {
             pfpBytes = Files.readAllBytes(Paths.get("src/main/resources/playerImages/"+name+".png"));
         } catch (IOException e) {
             pfpBytes = Files.readAllBytes(Paths.get("src/main/resources/playerImages/generic-player.png"));
-            System.out.println("Generic Player loaded");
+//            System.out.println("Generic Player loaded");
         }
     }
     public Image getPfp() {

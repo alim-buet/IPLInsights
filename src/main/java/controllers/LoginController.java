@@ -1,5 +1,4 @@
 package controllers;
-
 import client.Client;
 import dataModels.UserMode;
 import javafx.event.ActionEvent;
@@ -14,12 +13,9 @@ import network.ReadThreadClient;
 import server.NetworkUtil;
 import dataModels.Player;
 import dto.LoginCredential;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-
-
 public class LoginController {
         //as this guy is running in the backend of the client we should have the clients network util and list of players here
         NetworkUtil networkUtil = Client.getSockt();
@@ -99,7 +95,6 @@ public class LoginController {
                     Scene newScene = new Scene(loader.load());
 //                    System.out.println("ei line execute");
                     newScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/guest.css")).toExternalForm());
-
                     Client.getMainStage().setScene(newScene);
                     Client.getMainStage().show();
 //                    System.out.println("ei line execute hoise");
@@ -146,7 +141,7 @@ public class LoginController {
 
 
                 Scene newScene = new Scene(loader.load());
-                System.out.println("guest login fxml loading ... done");
+//                System.out.println("guest login fxml loading ... done");
                 newScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/guest.css")).toExternalForm());
 
 //                System.out.println("ei line execute");

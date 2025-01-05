@@ -89,8 +89,7 @@ public class AuctionController implements Initializable {
                         } else {
                             Alert buyConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
                             buyConfirmation.setTitle("Buy Player");
-                            buyConfirmation.setHeaderText("Are you sure you want to buy " +
-                                    player.getName() + " for " + player.getPrice() + " INR?");
+                            buyConfirmation.setHeaderText("Are you sure you want to buy " + player.getName() + " for " + player.getPrice() + " INR?");
                             buyConfirmation.showAndWait().ifPresent(response -> {
                                 if (response == ButtonType.OK) {
                                     handleBuyAction(player);
@@ -108,11 +107,9 @@ public class AuctionController implements Initializable {
             }
         });
 
-        // Initialize ObservableList with data from Client
         List<Player> playerList = Client.auctionedPlayerList;
         observableAuctionedPlayerList.setAll(playerList);
-
-        // Bind ObservableList to TableView
+        //list ta bind kora lagbe
         playerTable.setItems(observableAuctionedPlayerList);
     }
 
@@ -121,8 +118,6 @@ public class AuctionController implements Initializable {
             try {
                 networkUtil.write(new BuyRequest(player, Client.getClientClubName()));
                 System.out.println(player.getName() + "'s buy request sent to the server.");
-
-                // Remove player from ObservableList after buying (example for testing)
                 observableAuctionedPlayerList.remove(player);
 
             } catch (Exception e) {

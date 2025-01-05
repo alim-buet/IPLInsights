@@ -96,7 +96,6 @@ public class MainController implements Initializable {
                 System.out.println("Logout er shomoy network close korte jhamela");
             }
 
-            //login page load kora lagbe
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/views/login.fxml"));
             try {
@@ -139,9 +138,9 @@ public class MainController implements Initializable {
 
     @FXML
     public void searchByName(ActionEvent actionEvent) {
-        System.out.println("Search by name button clicked");
+//        System.out.println("Search by name button clicked");
         Player p = Client.playerDatabase.searchByName(searchNameTextField.getText());
-        System.out.println(p);
+//        System.out.println(p);
         if(p==null){
             //show an alert that no player found
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -163,7 +162,6 @@ public class MainController implements Initializable {
         String country = countrySearch.getValue();
         List<Player> result = Client.playerDatabase.searchByClubAndCountry(club, country);
         handleResult(result,0); //0-playercontroller 1-clubcontroller
-
     }
 
     @FXML public void searchByPosition(ActionEvent actionEvent) {
@@ -195,7 +193,7 @@ public class MainController implements Initializable {
     @FXML   public void showAnnualSalary() {
         if(Client.getUserMode()==UserMode.CLUB){
             //show the annual salary of the club in a formatted way to show the full text using %.2f
-            clubAnnualSalaryLabel.setText("Total Annual Salary: "+String.format("%.0f", Client.playerDatabase.totalSalary(Client.getClientClubName())));
+            clubAnnualSalaryLabel.setText("Total Annual Salary: "+String.format("%.0f", Client.playerDatabase.totalSalary(Client.getClientClubName()))+" INR");
         }
         else if(Client.getUserMode()==UserMode.GUEST){
             //view ache. so oita load korbo
@@ -212,7 +210,7 @@ public class MainController implements Initializable {
     @FXML  public void showAuction() {
         //user clicks on the auction tab. auction view load kore client er scene oita set kora lagbe
         //load the auction view fxml file and set it as the scene of the client
-        System.out.println("Auction button clicked");
+//        System.out.println("Auction button clicked");
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/views/auction.fxml"));
         try {
@@ -307,7 +305,6 @@ public class MainController implements Initializable {
             playerDisplayPController.playerData.getChildren().remove(playerDisplayPController.auctionBox);
             playerDisplayCController.playerData.getChildren().remove(playerDisplayCController.auctionBox);
             //in the fxml view there is a selection box for the club, we need to load all the club names in that box
-            //there is a function in the database that returns the list of all available club names
 
             selectedClubForMaxAge.setItems(FXCollections.observableArrayList(clubNames));
             selectedClubForMaxHeight.setItems(FXCollections.observableArrayList(clubNames));
@@ -315,9 +312,6 @@ public class MainController implements Initializable {
             selectedClubForMaxHeight.getSelectionModel().select(0);
             selectedClubForMaxAge.getSelectionModel().select(0);
             SelectedClubForMaxSalary.getSelectionModel().select(0);
-
-
-
 
 
         }
@@ -354,7 +348,7 @@ public class MainController implements Initializable {
     }
 
     @FXML  public void maxAgeSearch() {
-        System.out.println("Max age search button clicked");
+//        System.out.println("Max age search button clicked");
         String clubName;
         if(Client.getUserMode()==UserMode.CLUB){
              clubName = Client.getClientClubName();
@@ -363,7 +357,7 @@ public class MainController implements Initializable {
              clubName = selectedClubForMaxAge.getValue();
         }
         List<Player> result = Client.playerDatabase.searchMaxAgedPlayers(clubName);
-        System.out.println("Result size: "+result.size());
+//        System.out.println("Result size: "+result.size());
         handleResult(result, 1);
 
     }

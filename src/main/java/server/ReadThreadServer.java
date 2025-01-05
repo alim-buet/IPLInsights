@@ -50,7 +50,6 @@ public class ReadThreadServer implements Runnable {
         thread.start();
     }
     public void run(){
-        //server e asha info read korbe
         try {
             while(true){
                 Object o = networkUtil.read();

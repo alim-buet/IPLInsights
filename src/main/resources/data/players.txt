@@ -28,11 +28,11 @@ Trent Boult,New Zealand,35,1.85,Rajasthan Royals,Bowler,18,17500000
 Shivam Dube,India,31,1.83,Chennai Super Kings,Allrounder,25,13000000
 Kane Williamson,New Zealand,34,1.83,Gujarat Titans,Batsman,22,16000000
 Shikhar Dhawan,India,38,1.8,Punjab Kings,Batsman,42,17000000
-Kagiso Rabada,South Africa,29,1.91,Punjab Kings,Bowler,,19000000
+Kagiso Rabada,South Africa,29,1.91,Mumbai Indians,Bowler,,19000000
 Axar Patel,India,30,1.83,Delhi Capitals,Allrounder,20,17500000
 Mitchell Marsh,Australia,33,1.91,Delhi Capitals,Allrounder,31,18000000
 Dinesh Karthik,India,39,1.7,Royal Challengers Bangalore,Wicketkeeper,21,16000000
-Ruturaj Gaikwad,India,27,1.78,Chennai Super Kings,Batsman,31,15000000
+Ruturaj Gaikwad,India,27,1.78,Royal Challengers Bangalore,Batsman,31,15000000
 Bhuvneshwar Kumar,India,34,1.78,Sunrisers Hyderabad,Bowler,15,14000000
 Aiden Markram,South Africa,30,1.83,Sunrisers Hyderabad,Allrounder,16,16000000
 Prithvi Shaw,India,24,1.68,Delhi Capitals,Batsman,100,12000000
@@ -52,8 +52,8 @@ Lionel Messi,Argentina,36,1.8,Kolkata Knight Riders,Allrounder,10,50000000
 Cristiano Ronaldo,Portugal,37,1.87,Royal Challengers Bangalore,Batsman,7,100
 Mohammed Alim Uddin,Bangladesh,20,1.89,Delhi Capitals,Allrounder,67,10000000
 Shakib Al Hasan,Bangladesh,35,1.75,Sunrisers Hyderabad,Allrounder,75,15000000
-Taskin Ahmed,Bangladesh,29,1.89,Mumbai Indians,Bowler,88,18000000
+Taskin Ahmed,Bangladesh,29,1.89,Punjab Kings,Bowler,88,18000000
 Tamim Iqbal,Bangladesh,36,1.77,Gujarat Titans,Batsman,23,1200000
 Matheesha Pathirana,Sri Lanka,22,1.91,Punjab Kings,Bowler,77,13000000
 Bhanuka Rajapaksa,Sri Lanka,33,1.78,Punjab Kings,Batsman,34,13000000
-David Miller,South Africa,34,1.88,Gujarat Titans,Batsman,32,1900000
+David Miller,South Africa,34,1.88,Gujarat Titans,Batsman,32,19000000
